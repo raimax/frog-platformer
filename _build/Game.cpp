@@ -26,7 +26,8 @@ void Game::init()
     spriteManager->loadTextures();
     animationManager->loadAnimations();
 
-    level1 = MapLoader::parseMapFromJson("assets/map/test_map.json");
+    level1 = MapLoader::parseMapFromJson("assets/map/test_map2.json");
+    level1->buildLayers();
 
     SetTargetFPS(60);
 }
@@ -42,6 +43,7 @@ void Game::draw()
         Vector2{ SCREEN_W / 2 - 272 * (BG_SCALE/2), SCREEN_H / 2 - 160 * (BG_SCALE/2) }, 0, BG_SCALE, WHITE);
     player->draw();
     floor->draw();
+    level1->draw();
 
     debug->draw();
     DrawFPS(0, 0);

@@ -2,6 +2,7 @@
 
 std::map<std::string, Texture2D> SpriteManager::player;
 std::map<std::string, Texture2D> SpriteManager::background;
+std::map<std::string, Texture2D> SpriteManager::map;
 
 void SpriteManager::loadTextures()
 {
@@ -19,20 +20,36 @@ void SpriteManager::loadTextures()
 	background = {
 		{"main_background", LoadTexture("assets/map/bg.png")},
 	};
+
+	map = {
+		{"test_map_tileset", LoadTexture("assets/map/test_map_tileset.png")},
+	};
 }
 
-void SpriteManager::unloadTextures(std::vector<std::reference_wrapper<std::map<std::string, Texture2D>>> maps)
+void SpriteManager::unloadTextures(/*std::vector<std::reference_wrapper<std::map<std::string, Texture2D>>> textureMaps*/)
 {
-	for (auto const& map: maps)
+	/*for (auto const& map: textureMaps)
 	{
-		for (auto const& sprite : map.get())
+		for (auto const& texture : map.get())
 		{
-			UnloadTexture(sprite.second);
+			UnloadTexture(texture.second);
 		}
+	}*/
+	for (auto const& texture : player)
+	{
+		UnloadTexture(texture.second);
+	}
+	for (auto const& texture : background)
+	{
+		UnloadTexture(texture.second);
+	}
+	for (auto const& texture : map)
+	{
+		UnloadTexture(texture.second);
 	}
 }
 
 SpriteManager::~SpriteManager()
 {
-	unloadTextures({&player, &background});
+	unloadTextures();
 }

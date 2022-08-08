@@ -8,11 +8,12 @@
 class SpriteManager
 {
 private:
-	void unloadTextures(std::vector<std::reference_wrapper<std::map<std::string, Texture2D>>> maps);
+	void unloadTextures();
 public:
 	void loadTextures();
 	static std::map<std::string, Texture2D> player;
 	static std::map<std::string, Texture2D> background;
+	static std::map<std::string, Texture2D> map;
 	~SpriteManager();
 };
 
