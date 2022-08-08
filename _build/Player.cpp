@@ -69,8 +69,6 @@ void Player::move(Direction direction)
 		currentAnimation = "player_walk_right";
 		break;
 	case idle:
-		if (State.isAscending || State.isDescending) break;
-
 		if (State.FacingDirection.left) {
 			currentAnimation = "player_idle_left";
 		}
@@ -78,7 +76,8 @@ void Player::move(Direction direction)
 			currentAnimation = "player_idle_right";
 		}
 		break;
-	case up:
+	case airborne:
+		std::cout << State.isDescending << std::endl;
 		if (State.isAscending) {
 			if (State.FacingDirection.left) {
 				currentAnimation = "player_jump_left";
@@ -86,16 +85,14 @@ void Player::move(Direction direction)
 			else {
 				currentAnimation = "player_jump_right";
 			}
-			break;
 		}
-		else if (State.isDescending) {
+		if (State.isDescending) {
 			if (State.FacingDirection.left) {
 				currentAnimation = "player_fall_left";
 			}
 			else {
 				currentAnimation = "player_fall_right";
 			}
-			break;
 		};
 		break;
 	default:
@@ -113,6 +110,7 @@ void Player::update(GameObject* floor) {
 	updateMovement();
 
 	if (State.isDescending) {
+		move(airborne);
 		State.isAscending = false;
 		body.y += (GRAVITY / 2) * GetFrameTime();
 
@@ -123,6 +121,7 @@ void Player::update(GameObject* floor) {
 	}
 
 	if (State.isAscending) {
+		move(airborne);
 		if (IsKeyDown(KEY_SPACE) && currentJumpHeight < MAX_JUMP_HEIGHT) {
 			body.y -= GRAVITY * GetFrameTime();
 			currentJumpHeight += GRAVITY * GetFrameTime();
@@ -140,12 +139,11 @@ void Player::updateMovement() {
 	else if (IsKeyDown(KEY_D)) {
 		move(right);
 	}
-	else {
+	else if (!State.isAscending && !State.isDescending) {
 		move(idle);
 	};
-	if (IsKeyPressed(KEY_SPACE) && !State.isDescending) {
+	if (IsKeyPressed(KEY_SPACE)) {
 		State.isAscending = true;
-		move(up);
 	};
 }
 

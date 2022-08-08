@@ -16,7 +16,7 @@ enum Direction
 	left,
 	right,
 	idle,
-	up
+	airborne
 };
 
 class Player : public GameObject
