@@ -77,7 +77,6 @@ void Player::move(Direction direction)
 		}
 		break;
 	case airborne:
-		std::cout << State.isDescending << std::endl;
 		if (State.isAscending) {
 			if (State.FacingDirection.left) {
 				currentAnimation = "player_jump_left";

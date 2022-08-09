@@ -27,7 +27,6 @@ void Game::init()
     animationManager->loadAnimations();
 
     level1 = MapLoader::parseMapFromJson("assets/map/test_map2.json");
-    level1->buildLayers();
 
     SetTargetFPS(60);
 }

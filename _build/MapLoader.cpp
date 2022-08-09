@@ -23,23 +23,26 @@ Map* MapLoader::parseMapFromJson(std::string pathToFile)
 
     Map* map = new Map();
 
-    map->setWidth(mapJson["width"]);
-    map->setheight(mapJson["height"]);
+    map->setDimensions(mapJson["width"], mapJson["height"]);
 
     for (auto const &tileset : mapJson["tilesets"]) {
-        map->getTilesets()->push_back(MapTileset(tileset["tilewidth"], tileset["tileheight"], tileset["name"]));
+        map->addTilesetData(MapTilesetData(tileset["tilewidth"], tileset["tileheight"], 
+            tileset["name"], tileset["imagewidth"], tileset["imageheight"]));
     }
 
     for (auto const &layer : mapJson["layers"]) {
         std::vector<int> data;
 
-        for (auto const &spriteNumber : layer["data"])
+        for (auto const &spriteId : layer["data"])
         {
-            data.push_back(spriteNumber);
+            data.push_back(spriteId);
         }
 
-        map->getLayers()->push_back(MapLayer(data, layer["name"]));
+        map->addLayerData(MapLayerData(layer["id"], layer["name"], data));
     }
+
+    map->buildLayers();
+    map->buildImageArray();
 
     return map;
 }
