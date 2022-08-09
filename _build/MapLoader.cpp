@@ -38,7 +38,13 @@ Map* MapLoader::parseMapFromJson(std::string pathToFile)
             data.push_back(spriteId);
         }
 
-        map->addLayerData(MapLayerData(layer["id"], layer["name"], data));
+        int layerId = 0;
+
+        if (layer["name"] == "Ground") layerId = GROUND;
+        if (layer["name"] == "Collision") layerId = COLLISION;
+        if (layer["name"] == "Foreground") layerId = FOREGROUND;
+
+        map->addLayerData(MapLayerData(layerId, layer["name"], data));
     }
 
     map->buildLayers();

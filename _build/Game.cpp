@@ -3,7 +3,7 @@
 #include <format>
 
 #ifndef BG_SCALE
-#define BG_SCALE 5.0f
+#define BG_SCALE 8.0f
 #endif // !BG_SCALE
 
 
@@ -21,7 +21,12 @@ void Game::start() {
 
 void Game::init()
 {
-    InitWindow(SCREEN_W, SCREEN_H, "Game title");
+    SetConfigFlags(FLAG_VSYNC_HINT);
+    InitWindow(windowWidth, windowHeight, "Game title");
+    SetWindowMinSize(1280, 720);
+
+    target = LoadRenderTexture(gameScreenWidth, gameScreenHeight);
+    SetTextureFilter(target.texture, TEXTURE_FILTER_BILINEAR);
 
     spriteManager->loadTextures();
     animationManager->loadAnimations();
@@ -33,25 +38,47 @@ void Game::init()
 
 void Game::draw()
 {
+    float scale = MIN((float)GetScreenWidth() / gameScreenWidth, (float)GetScreenHeight() / gameScreenHeight);
+
+    BeginTextureMode(target);
+        ClearBackground(BLACK);  // Clear render texture background color
+
+        for (int i = 0; i < 10; i++) DrawRectangle(0, (gameScreenHeight / 10) * i, gameScreenWidth, gameScreenHeight / 10, WHITE);
+
+        DrawTextureEx(
+            SpriteManager::background["main_background"],
+            Vector2{ gameScreenWidth / 2 - 272 * (BG_SCALE / 2), gameScreenHeight / 2 - 160 * (BG_SCALE / 2) }, 0, BG_SCALE, WHITE);
+        level1->draw();
+        floor->draw();
+        player->draw();
+
+        debug->draw();
+        DrawFPS(0, 0);
+    EndTextureMode();
+
     BeginDrawing();
 
-    ClearBackground(RAYWHITE);
+        ClearBackground(BLACK);
 
-    DrawTextureEx(
-        SpriteManager::background["main_background"], 
-        Vector2{ SCREEN_W / 2 - 272 * (BG_SCALE/2), SCREEN_H / 2 - 160 * (BG_SCALE/2) }, 0, BG_SCALE, WHITE);
-    player->draw();
-    floor->draw();
-    level1->draw();
+        DrawTexturePro(
+            target.texture, 
+            Rectangle { 0.0f, 0.0f, (float)target.texture.width, (float)-target.texture.height },
+            Rectangle {
+            (GetScreenWidth() - ((float)gameScreenWidth * scale)) * 0.5f, (GetScreenHeight() - ((float)gameScreenHeight * scale)) * 0.5f,
+                (float)gameScreenWidth* scale, (float)gameScreenHeight* scale
+            }, 
+            Vector2 { 0, 0 }, 0.0f, WHITE);
 
-    debug->draw();
-    DrawFPS(0, 0);
     EndDrawing();
 }
 
 void Game::update()
 {
     player->update(floor);
+    if (IsKeyPressed(KEY_F)) {
+        SetWindowSize(1920, 1080);
+        ToggleFullscreen();
+    }
 }
 
 Player* Game::getPlayer()
@@ -66,4 +93,5 @@ Game::~Game() {
     delete player;
     delete floor;
     delete debug;
+    UnloadRenderTexture(target);
 }

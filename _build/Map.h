@@ -52,7 +52,8 @@ typedef struct MapLayer {
 
 enum Layer {
 	GROUND = 1,
-	COLLISION = 2
+	COLLISION = 2,
+	FOREGROUND = 3
 };
 
 class Map
@@ -60,7 +61,7 @@ class Map
 private:
 	int width;
 	int height;
-	float scale = 2.0f;
+	float scale = 4.0f;
 	Rectangle frameRec;
 	Texture2D background;
 	std::vector<std::vector<int>> dataToLayer(const std::vector<int>* data);

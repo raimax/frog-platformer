@@ -106,17 +106,17 @@ void Map::buildImageArray() {
 
 Rectangle Map::getTileCoords(int layerId, int tileId) {
 	Layer layer = static_cast<Layer>(layerId - 1);
-	for (int i = 0; i < tilesetData.at(layer).columns; i++)
+	for (int i = 0; i < tilesetData.at(0).columns; i++)
 	{
-		for (int j = 0; j < tilesetData.at(layer).rows; j++)
+		for (int j = 0; j < tilesetData.at(0).rows; j++)
 		{
 			if (tilesetData.at(0).imageArray[i][j] == tileId) {
 				return Rectangle
 				{ 
-					(float)(i * tilesetData.at(layer).tileWidth),
-					(float)(j * tilesetData.at(layer).tileHeight),
-					(float)(tilesetData.at(layer).tileWidth),
-					(float)(tilesetData.at(layer).tileHeight)
+					(float)(i * tilesetData.at(0).tileWidth),
+					(float)(j * tilesetData.at(0).tileHeight),
+					(float)(tilesetData.at(0).tileWidth),
+					(float)(tilesetData.at(0).tileHeight)
 				};
 			}
 		}
