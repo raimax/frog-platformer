@@ -64,7 +64,7 @@ private:
 	float scale = 4.0f;
 	Rectangle frameRec;
 	Texture2D background;
-	std::vector<std::vector<int>> dataToLayer(const std::vector<int>* data);
+	std::vector<std::vector<int>> dataToLayer(const std::vector<int>& data);
 	std::vector<MapLayerData> layerData;
 	std::vector<MapTilesetData> tilesetData;
 	std::vector<MapLayer> mapLayers;
@@ -75,7 +75,7 @@ public:
 	void buildImageArray();
 	void draw();
 	void setDimensions(int width, int height);
-	void addTilesetData(MapTilesetData data);
-	void addLayerData(MapLayerData data);
+	void addTilesetData(const MapTilesetData& data);
+	void addLayerData(const MapLayerData& data);
 };
 

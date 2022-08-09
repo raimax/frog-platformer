@@ -38,7 +38,7 @@ void Map::buildLayers()
 	{
 		for (auto const& layer : layerData)
 		{
-			mapLayers.push_back(MapLayer(layer.id, layer.name, dataToLayer(&layer.data), width, height));
+			mapLayers.push_back(MapLayer(layer.id, layer.name, dataToLayer(layer.data), width, height));
 		}
 	}
 }
@@ -48,7 +48,7 @@ Map::~Map()
 
 }
 
-std::vector<std::vector<int>> Map::dataToLayer(const std::vector<int>* data)
+std::vector<std::vector<int>> Map::dataToLayer(const std::vector<int>& data)
 {
 	std::vector<std::vector<int>> layer;
 	layer.resize(height, std::vector<int>(width));
@@ -59,7 +59,7 @@ std::vector<std::vector<int>> Map::dataToLayer(const std::vector<int>* data)
 	{
 		for (int row = 0; row < width; row++)
 		{
-			layer[col][row] = data->at(counter);
+			layer[col][row] = data.at(counter);
 			counter++;
 		}
 	}
@@ -72,12 +72,12 @@ void Map::setDimensions(int width, int height) {
 	this->height = height;
 }
 
-void Map::addTilesetData(MapTilesetData data)
+void Map::addTilesetData(const MapTilesetData& data)
 {
 	tilesetData.push_back(data);
 }
 
-void Map::addLayerData(MapLayerData data)
+void Map::addLayerData(const MapLayerData& data)
 {
 	layerData.push_back(data);
 }
