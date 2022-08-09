@@ -4,7 +4,7 @@
 #include "AnimationManager.h"
 
 #ifndef GRAVITY
-#define GRAVITY 500.0f
+#define GRAVITY 700.0f
 #endif // !GRAVITY
 
 #ifndef MAX_JUMP_HEIGHT
