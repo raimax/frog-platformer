@@ -2,6 +2,8 @@
 #include "raylib.h"
 #include "GameObject.h"
 #include "AnimationManager.h"
+#include <vector>
+#include "Map.h"
 
 #ifndef GRAVITY
 #define GRAVITY 700.0f
@@ -34,14 +36,15 @@ private:
 		} FacingDirection;
 	} State;
 	void setFacingDirection(Direction direction);
-	void move(Direction direction);
+	void move(Direction direction, Map* map);
 	std::string currentAnimation = "player_fall_right";
-	void updateMovement();
+	void updateMovement(Map* map);
+	bool isColliding(std::vector<ObjectGroupData>& objectGroupData);
 
 public:
 	void draw() override;
 	Player(Rectangle rectangle);
-	void update(GameObject* floor);
+	void update(Map* map);
 	ObjectState getState();
 };
 

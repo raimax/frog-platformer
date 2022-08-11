@@ -9,7 +9,7 @@ Rectangle GameObject::getBody() {
 }
 
 void GameObject::draw() {
-	DrawRectangle(body.x, body.y, body.width, body.height, BLACK);
+	DrawRectangle((int)body.x, (int)body.y, (int)body.width, (int)body.height, BLACK);
 }
 
 GameObject::~GameObject() {

@@ -32,13 +32,31 @@ void Map::draw()
 	}
 }
 
-void Map::buildLayers()
+void Map::buildTileLayers()
 {
 	for (auto const& tileset : tilesetData)
 	{
 		for (auto const& layer : layerData)
 		{
 			mapLayers.push_back(MapLayer(layer.id, layer.name, dataToLayer(layer.data), width, height));
+		}
+	}
+}
+
+void Map::drawObjects() {
+	for (auto& objectGroup : objectGroupData) {
+		if (objectGroup.name == "Collision") {
+			for (auto& object : objectGroup.objects)
+			{
+				DrawRectangleLinesEx(
+					Rectangle{ 
+						object.rectangle.x * scale,
+						object.rectangle.y * scale, 
+						object.rectangle.width * scale, 
+						object.rectangle.height * scale}, 
+					5, 
+					RED);
+			}
 		}
 	}
 }
@@ -72,12 +90,12 @@ void Map::setDimensions(int width, int height) {
 	this->height = height;
 }
 
-void Map::addTilesetData(const MapTilesetData& data)
+void Map::addTilesetData(const TilesetData& data)
 {
 	tilesetData.push_back(data);
 }
 
-void Map::addLayerData(const MapLayerData& data)
+void Map::addLayerData(const TileLayerData& data)
 {
 	layerData.push_back(data);
 }
@@ -123,4 +141,12 @@ Rectangle Map::getTileCoords(int layerId, int tileId) {
 	}
 
 	return Rectangle{ 0, 0, 0, 0 };
+}
+
+void Map::addObjectData(const ObjectGroupData& data) {
+	objectGroupData.push_back(data);
+}
+
+float Map::getScale() {
+	return scale;
 }

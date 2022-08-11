@@ -49,7 +49,7 @@ void Game::draw()
             SpriteManager::background["main_background"],
             Vector2{ gameScreenWidth / 2 - 272 * (BG_SCALE / 2), gameScreenHeight / 2 - 160 * (BG_SCALE / 2) }, 0, BG_SCALE, WHITE);
         level1->draw();
-        floor->draw();
+        level1->drawObjects();
         player->draw();
 
         debug->draw();
@@ -74,7 +74,8 @@ void Game::draw()
 
 void Game::update()
 {
-    player->update(floor);
+    player->update(level1);
+
     if (IsKeyPressed(KEY_F)) {
         SetWindowSize(1920, 1080);
         ToggleFullscreen();
@@ -91,7 +92,6 @@ Game::~Game() {
     delete animationManager;
     delete level1;
     delete player;
-    delete floor;
     delete debug;
     UnloadRenderTexture(target);
 }

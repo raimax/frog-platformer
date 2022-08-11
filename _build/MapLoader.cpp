@@ -26,17 +26,11 @@ Map* MapLoader::parseMapFromJson(std::string pathToFile)
     map->setDimensions(mapJson["width"], mapJson["height"]);
 
     for (auto const &tileset : mapJson["tilesets"]) {
-        map->addTilesetData(MapTilesetData(tileset["tilewidth"], tileset["tileheight"], 
+        map->addTilesetData(TilesetData(tileset["tilewidth"], tileset["tileheight"], 
             tileset["name"], tileset["imagewidth"], tileset["imageheight"]));
     }
 
     for (auto const &layer : mapJson["layers"]) {
-        std::vector<int> data;
-
-        for (auto const &spriteId : layer["data"])
-        {
-            data.push_back(spriteId);
-        }
 
         int layerId = 0;
 
@@ -44,10 +38,37 @@ Map* MapLoader::parseMapFromJson(std::string pathToFile)
         if (layer["name"] == "Collision") layerId = COLLISION;
         if (layer["name"] == "Foreground") layerId = FOREGROUND;
 
-        map->addLayerData(MapLayerData(layerId, layer["name"], data));
+        if (layer["type"] == "tilelayer") {
+            std::vector<int> data;
+
+            for (auto const& spriteId : layer["data"])
+            {
+                data.push_back(spriteId);
+            }
+
+            map->addLayerData(TileLayerData(layerId, layer["name"], data, layer["type"]));
+        }
+        else if (layer["type"] == "objectgroup") {
+            std::vector<MapObject> objects;
+
+            for (auto const& object : layer["objects"])
+            {
+                objects.push_back(MapObject(
+                    object["id"], 
+                    Rectangle{ 
+                        object["x"] * map->getScale(), 
+                        object["y"] * map->getScale(), 
+                        object["width"] * map->getScale(), 
+                        object["height"] * map->getScale() }, 
+                    object["type"]));
+            }
+
+            map->addObjectData(ObjectGroupData(layerId, layer["name"], objects, layer["type"]));
+        }
+        
     }
 
-    map->buildLayers();
+    map->buildTileLayers();
     map->buildImageArray();
 
     return map;

@@ -18,7 +18,7 @@ void Player::setFacingDirection(Direction direction)
 	}
 }
 
-void Player::move(Direction direction)
+void Player::move(Direction direction, Map* map)
 {
 	setFacingDirection(direction);
 
@@ -105,22 +105,25 @@ void Player::draw() {
 
 Player::Player(Rectangle rectangle) : GameObject(rectangle) {}
 
-void Player::update(GameObject* floor) {
-	updateMovement();
+void Player::update(Map* map) {
+	updateMovement(map);
 
 	if (State.isDescending) {
-		move(airborne);
+		move(airborne, map);
 		State.isAscending = false;
 		body.y += (GRAVITY / 2) * GetFrameTime();
+	}
 
-		if (CheckCollisionRecs(body, floor->getBody())) {
-			State.isDescending = false;
-			currentJumpHeight = 0;
-		}
+	if (isColliding(map->objectGroupData)) {
+		State.isDescending = false;
+		currentJumpHeight = 0;
+	}
+	else if (!State.isAscending) {
+		State.isDescending = true;
 	}
 
 	if (State.isAscending) {
-		move(airborne);
+		move(airborne, map);
 		if (IsKeyDown(KEY_SPACE) && currentJumpHeight < MAX_JUMP_HEIGHT) {
 			body.y -= GRAVITY * GetFrameTime();
 			currentJumpHeight += GRAVITY * GetFrameTime();
@@ -131,19 +134,31 @@ void Player::update(GameObject* floor) {
 	}
 }
 
-void Player::updateMovement() {
+void Player::updateMovement(Map* map) {
 	if (IsKeyDown(KEY_A)) {
-		move(left);
+		move(left, map);
 	}
 	else if (IsKeyDown(KEY_D)) {
-		move(right);
+		move(right, map);
 	}
 	else if (!State.isAscending && !State.isDescending) {
-		move(idle);
+		move(idle, map);
 	};
 	if (IsKeyPressed(KEY_SPACE)) {
 		State.isAscending = true;
 	};
+}
+
+bool Player::isColliding(std::vector<ObjectGroupData>& objectGroupData)
+{
+	for (auto const& objectGroup : objectGroupData) {
+		for (auto const& object : objectGroup.objects) {
+			if (CheckCollisionRecs(body, object.rectangle)) {
+				return true;
+			}
+		}
+	}
+	return false;
 }
 
 Player::ObjectState Player::getState()
