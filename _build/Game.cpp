@@ -48,9 +48,9 @@ void Game::draw()
         DrawTextureEx(
             SpriteManager::background["main_background"],
             Vector2{ gameScreenWidth / 2 - 272 * (BG_SCALE / 2), gameScreenHeight / 2 - 160 * (BG_SCALE / 2) }, 0, BG_SCALE, WHITE);
-        level1->draw();
-        level1->drawObjects();
+        level1->drawGroundLayer();
         player->draw();
+        level1->drawForegroundLayer();
 
         debug->draw();
         DrawFPS(0, 0);

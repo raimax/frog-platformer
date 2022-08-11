@@ -4,8 +4,8 @@ GameObject::GameObject(Rectangle body) {
 	this->body = body;
 }
 
-Rectangle GameObject::getBody() {
-	return body;
+Rectangle* GameObject::getBody() {
+	return &body;
 }
 
 void GameObject::draw() {

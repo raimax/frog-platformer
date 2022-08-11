@@ -103,10 +103,13 @@ public:
 	std::vector<ObjectGroupData> objectGroupData;
 	~Map();
 	void buildTileLayers();
-	void drawObjects();
 	void buildImageArray();
-	void draw();
+	//void draw();
+	void drawGroundLayer();
+	void drawForegroundLayer();
 	void setDimensions(int width, int height);
+	int* getWidth();
+	int* getHeight();
 	void addTilesetData(const TilesetData& data);
 	void addLayerData(const TileLayerData& data);
 	void addObjectData(const ObjectGroupData& data);

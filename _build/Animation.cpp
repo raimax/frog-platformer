@@ -30,7 +30,7 @@ void Animation::play(GameObject* gameObject)
     DrawTexturePro(
         sprite,
         frameRec,
-        gameObject->getBody(),
+        *gameObject->getBody(),
         Vector2{ 0, 0 },
         0,
         WHITE);

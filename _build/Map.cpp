@@ -1,31 +1,67 @@
 #include "Map.h"
 
-void Map::draw()
+void Map::drawGroundLayer() 
 {
 	for (auto const& tileset : tilesetData) {
 		for (auto const& layer : mapLayers) {
-			for (int i = 0; i < height; i++)
-			{
-				for (int j = 0; j < width; j++)
+			if (layer.id == GROUND) {
+				for (int i = 0; i < height; i++)
 				{
-					if (layer.layerMatrix[i][j] == 0) continue;
+					for (int j = 0; j < width; j++)
+					{
+						if (layer.layerMatrix[i][j] == 0) continue;
 
-					frameRec = getTileCoords(layer.id, layer.layerMatrix[i][j]);
+						frameRec = getTileCoords(layer.id, layer.layerMatrix[i][j]);
 
-					DrawTexturePro(
-						SpriteManager::map[tileset.name],
-						frameRec,
-						Rectangle
-						{
-							(float)(j * tileset.tileWidth * scale),
-							(float)(i * tileset.tileHeight * scale),
-							(float)(tileset.tileWidth * scale),
-							(float)(tileset.tileHeight * scale)
-						},
-						Vector2{ 0, 0 },
-						0,
-						WHITE
-					);
+						DrawTexturePro(
+							SpriteManager::map[tileset.name],
+							frameRec,
+							Rectangle
+							{
+								(float)(j * tileset.tileWidth * scale),
+								(float)(i * tileset.tileHeight * scale),
+								(float)(tileset.tileWidth * scale),
+								(float)(tileset.tileHeight * scale)
+							},
+							Vector2{ 0, 0 },
+							0,
+							WHITE
+						);
+					}
+				}
+			}
+		}
+	}
+}
+
+void Map::drawForegroundLayer()
+{
+	for (auto const& tileset : tilesetData) {
+		for (auto const& layer : mapLayers) {
+			if (layer.id == FOREGROUND) {
+				for (int i = 0; i < height; i++)
+				{
+					for (int j = 0; j < width; j++)
+					{
+						if (layer.layerMatrix[i][j] == 0) continue;
+
+						frameRec = getTileCoords(layer.id, layer.layerMatrix[i][j]);
+
+						DrawTexturePro(
+							SpriteManager::map[tileset.name],
+							frameRec,
+							Rectangle
+							{
+								(float)(j * tileset.tileWidth * scale),
+								(float)(i * tileset.tileHeight * scale),
+								(float)(tileset.tileWidth * scale),
+								(float)(tileset.tileHeight * scale)
+							},
+							Vector2{ 0, 0 },
+							0,
+							WHITE
+						);
+					}
 				}
 			}
 		}
@@ -39,24 +75,6 @@ void Map::buildTileLayers()
 		for (auto const& layer : layerData)
 		{
 			mapLayers.push_back(MapLayer(layer.id, layer.name, dataToLayer(layer.data), width, height));
-		}
-	}
-}
-
-void Map::drawObjects() {
-	for (auto& objectGroup : objectGroupData) {
-		if (objectGroup.name == "Collision") {
-			for (auto& object : objectGroup.objects)
-			{
-				DrawRectangleLinesEx(
-					Rectangle{ 
-						object.rectangle.x * scale,
-						object.rectangle.y * scale, 
-						object.rectangle.width * scale, 
-						object.rectangle.height * scale}, 
-					5, 
-					RED);
-			}
 		}
 	}
 }
@@ -149,4 +167,12 @@ void Map::addObjectData(const ObjectGroupData& data) {
 
 float Map::getScale() {
 	return scale;
+}
+
+int* Map::getWidth() {
+	return &width;
+}
+
+int* Map::getHeight() {
+	return &height;
 }

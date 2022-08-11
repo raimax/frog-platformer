@@ -29,9 +29,9 @@ private:
 	Vector2 jumpStartPosition = Vector2{-1, -1};
 	struct ObjectState {
 		bool isAscending = false;
-		bool isDescending = true;
+		bool isDescending;
 		struct FacingDirection {
-			bool right = true;
+			bool right;
 			bool left = false;
 		} FacingDirection;
 	} State;
@@ -39,7 +39,10 @@ private:
 	void move(Direction direction, Map* map);
 	std::string currentAnimation = "player_fall_right";
 	void updateMovement(Map* map);
-	bool isColliding(std::vector<ObjectGroupData>& objectGroupData);
+	bool isCollidingBottom(std::vector<ObjectGroupData>& objectGroupData);
+	bool isCollidingTop(std::vector<ObjectGroupData>& objectGroupData);
+	bool isCollidingLeft(std::vector<ObjectGroupData>& objectGroupData);
+	bool isCollidingRight(std::vector<ObjectGroupData>& objectGroupData);
 
 public:
 	void draw() override;

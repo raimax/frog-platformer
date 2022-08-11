@@ -8,7 +8,7 @@ protected:
 public:
 	~GameObject();
 	GameObject(Rectangle body);
-	Rectangle getBody();
+	Rectangle* getBody();
 	void update();
 	virtual void draw();
 };

@@ -25,7 +25,11 @@ void Player::move(Direction direction, Map* map)
 	switch (direction)
 	{
 	case left:
-		body.x -= horizontalSpeed * GetFrameTime();
+		if (!isCollidingLeft(map->objectGroupData)) {
+			if (body.x >= 0) {
+				body.x -= horizontalSpeed * GetFrameTime();
+			}
+		}
 		if (State.isAscending) {
 			if (State.FacingDirection.left) {
 				currentAnimation = "player_jump_left";
@@ -47,7 +51,11 @@ void Player::move(Direction direction, Map* map)
 		currentAnimation = "player_walk_left";
 		break;
 	case right:
-		body.x += horizontalSpeed * GetFrameTime();
+		if (!isCollidingRight(map->objectGroupData)) {
+			if (body.x + body.width <= *map->getWidth() * map->getScale() * 16) {
+				body.x += horizontalSpeed * GetFrameTime();
+			}
+		}
 		if (State.isAscending) {
 			if (State.FacingDirection.left) {
 				currentAnimation = "player_jump_left";
@@ -101,6 +109,35 @@ void Player::move(Direction direction, Map* map)
 
 void Player::draw() {
 	AnimationManager::playAnimation(currentAnimation, this);
+	//hitbox
+	/*Rectangle rectBottom = Rectangle{
+				body.x + 10.0f,
+				body.y + body.height,
+				body.width - 20.0f,
+				1.0f
+	};
+	Rectangle rectTop = Rectangle{
+				body.x + 10.0f,
+				body.y,
+				body.width - 20.0f,
+				1.0f
+	};
+	Rectangle rectLeft = Rectangle{
+				body.x - 1.0f,
+				body.y + 3.0f,
+				1.0f,
+				body.height - 6.0f
+	};
+	Rectangle rectRight = Rectangle{
+				body.x + body.width + 1.0f,
+				body.y + 3.0f,
+				1.0f,
+				body.height - 6.0f
+	};
+	DrawRectangleLinesEx(rectBottom, 2, BLACK);
+	DrawRectangleLinesEx(rectTop, 2, BLACK);
+	DrawRectangleLinesEx(rectLeft, 2, BLACK);
+	DrawRectangleLinesEx(rectRight, 2, BLACK);*/
 }
 
 Player::Player(Rectangle rectangle) : GameObject(rectangle) {}
@@ -114,12 +151,16 @@ void Player::update(Map* map) {
 		body.y += (GRAVITY / 2) * GetFrameTime();
 	}
 
-	if (isColliding(map->objectGroupData)) {
+	if (isCollidingBottom(map->objectGroupData)) {
 		State.isDescending = false;
 		currentJumpHeight = 0;
 	}
 	else if (!State.isAscending) {
 		State.isDescending = true;
+	}
+
+	if (isCollidingTop(map->objectGroupData)) {
+		currentJumpHeight = MAX_JUMP_HEIGHT;
 	}
 
 	if (State.isAscending) {
@@ -149,11 +190,71 @@ void Player::updateMovement(Map* map) {
 	};
 }
 
-bool Player::isColliding(std::vector<ObjectGroupData>& objectGroupData)
+bool Player::isCollidingBottom(std::vector<ObjectGroupData>& objectGroupData)
 {
+	Rectangle rectBottom = Rectangle{
+				body.x + 10.0f,
+				body.y + body.height,
+				body.width - 20.0f,
+				1.0f
+	};
 	for (auto const& objectGroup : objectGroupData) {
 		for (auto const& object : objectGroup.objects) {
-			if (CheckCollisionRecs(body, object.rectangle)) {
+			if (CheckCollisionRecs(rectBottom, object.rectangle)) {
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
+bool Player::isCollidingTop(std::vector<ObjectGroupData>& objectGroupData)
+{
+	Rectangle rectTop = Rectangle{
+				body.x + 10.0f,
+				body.y,
+				body.width - 20.0f,
+				1.0f
+	};
+	for (auto const& objectGroup : objectGroupData) {
+		for (auto const& object : objectGroup.objects) {
+			if (CheckCollisionRecs(rectTop, object.rectangle)) {
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
+bool Player::isCollidingLeft(std::vector<ObjectGroupData>& objectGroupData)
+{
+	Rectangle rectLeft = Rectangle{
+				body.x - 1.0f,
+				body.y + 10.0f,
+				1.0f,
+				body.height - 20.0f
+	};
+	for (auto const& objectGroup : objectGroupData) {
+		for (auto const& object : objectGroup.objects) {
+			if (CheckCollisionRecs(rectLeft, object.rectangle)) {
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
+bool Player::isCollidingRight(std::vector<ObjectGroupData>& objectGroupData)
+{
+	Rectangle rectRight = Rectangle{
+				body.x + body.width + 1.0f,
+				body.y + 10.0f,
+				1.0f,
+				body.height - 20.0f
+	};
+	for (auto const& objectGroup : objectGroupData) {
+		for (auto const& object : objectGroup.objects) {
+			if (CheckCollisionRecs(rectRight, object.rectangle)) {
 				return true;
 			}
 		}
