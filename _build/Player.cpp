@@ -25,7 +25,7 @@ void Player::move(Direction direction, Map* map)
 	switch (direction)
 	{
 	case left:
-		if (!isCollidingLeft(map->objectGroupData)) {
+		if (!checkCollision(map->objectGroupData).left) {
 			if (body.x >= 0) {
 				body.x -= horizontalSpeed * GetFrameTime();
 			}
@@ -51,7 +51,7 @@ void Player::move(Direction direction, Map* map)
 		currentAnimation = "player_walk_left";
 		break;
 	case right:
-		if (!isCollidingRight(map->objectGroupData)) {
+		if (!checkCollision(map->objectGroupData).right) {
 			if (body.x + body.width <= *map->getWidth() * map->getScale() * 16) {
 				body.x += horizontalSpeed * GetFrameTime();
 			}
@@ -110,34 +110,10 @@ void Player::move(Direction direction, Map* map)
 void Player::draw() {
 	AnimationManager::playAnimation(currentAnimation, this);
 	//hitbox
-	/*Rectangle rectBottom = Rectangle{
-				body.x + 10.0f,
-				body.y + body.height,
-				body.width - 20.0f,
-				1.0f
-	};
-	Rectangle rectTop = Rectangle{
-				body.x + 10.0f,
-				body.y,
-				body.width - 20.0f,
-				1.0f
-	};
-	Rectangle rectLeft = Rectangle{
-				body.x - 1.0f,
-				body.y + 3.0f,
-				1.0f,
-				body.height - 6.0f
-	};
-	Rectangle rectRight = Rectangle{
-				body.x + body.width + 1.0f,
-				body.y + 3.0f,
-				1.0f,
-				body.height - 6.0f
-	};
-	DrawRectangleLinesEx(rectBottom, 2, BLACK);
-	DrawRectangleLinesEx(rectTop, 2, BLACK);
-	DrawRectangleLinesEx(rectLeft, 2, BLACK);
-	DrawRectangleLinesEx(rectRight, 2, BLACK);*/
+	//DrawRectangleLinesEx(rectBottom, 2, BLACK);
+	//DrawRectangleLinesEx(rectTop, 2, BLACK);
+	//DrawRectangleLinesEx(rectLeft, 2, BLACK);
+	//DrawRectangleLinesEx(rectRight, 2, BLACK);
 }
 
 Player::Player(Rectangle rectangle) : GameObject(rectangle) {}
@@ -151,7 +127,7 @@ void Player::update(Map* map) {
 		body.y += (GRAVITY / 2) * GetFrameTime();
 	}
 
-	if (isCollidingBottom(map->objectGroupData)) {
+	if (checkCollision(map->objectGroupData).bottom) {
 		State.isDescending = false;
 		currentJumpHeight = 0;
 	}
@@ -159,7 +135,7 @@ void Player::update(Map* map) {
 		State.isDescending = true;
 	}
 
-	if (isCollidingTop(map->objectGroupData)) {
+	if (checkCollision(map->objectGroupData).top) {
 		currentJumpHeight = MAX_JUMP_HEIGHT;
 	}
 
@@ -190,79 +166,35 @@ void Player::updateMovement(Map* map) {
 	};
 }
 
-bool Player::isCollidingBottom(std::vector<ObjectGroupData>& objectGroupData)
-{
-	Rectangle rectBottom = Rectangle{
-				body.x + 10.0f,
-				body.y + body.height,
-				body.width - 20.0f,
-				1.0f
-	};
-	for (auto const& objectGroup : objectGroupData) {
-		for (auto const& object : objectGroup.objects) {
-			if (CheckCollisionRecs(rectBottom, object.rectangle)) {
-				return true;
-			}
-		}
-	}
-	return false;
-}
-
-bool Player::isCollidingTop(std::vector<ObjectGroupData>& objectGroupData)
-{
-	Rectangle rectTop = Rectangle{
-				body.x + 10.0f,
-				body.y,
-				body.width - 20.0f,
-				1.0f
-	};
-	for (auto const& objectGroup : objectGroupData) {
-		for (auto const& object : objectGroup.objects) {
-			if (CheckCollisionRecs(rectTop, object.rectangle)) {
-				return true;
-			}
-		}
-	}
-	return false;
-}
-
-bool Player::isCollidingLeft(std::vector<ObjectGroupData>& objectGroupData)
-{
-	Rectangle rectLeft = Rectangle{
-				body.x - 1.0f,
-				body.y + 10.0f,
-				1.0f,
-				body.height - 20.0f
-	};
-	for (auto const& objectGroup : objectGroupData) {
-		for (auto const& object : objectGroup.objects) {
-			if (CheckCollisionRecs(rectLeft, object.rectangle)) {
-				return true;
-			}
-		}
-	}
-	return false;
-}
-
-bool Player::isCollidingRight(std::vector<ObjectGroupData>& objectGroupData)
-{
-	Rectangle rectRight = Rectangle{
-				body.x + body.width + 1.0f,
-				body.y + 10.0f,
-				1.0f,
-				body.height - 20.0f
-	};
-	for (auto const& objectGroup : objectGroupData) {
-		for (auto const& object : objectGroup.objects) {
-			if (CheckCollisionRecs(rectRight, object.rectangle)) {
-				return true;
-			}
-		}
-	}
-	return false;
-}
-
 Player::ObjectState Player::getState()
 {
 	return State;
+}
+
+Collision Player::checkCollision(std::vector<ObjectGroupData>& objectGroupData) {
+	Rectangle rectTop = Rectangle{ body.x + 10.0f, body.y, body.width - 20.0f, 1.0f };
+	Rectangle rectBottom = Rectangle{ body.x + 10.0f, body.y + body.height, body.width - 20.0f, 1.0f };
+	Rectangle rectLeft = Rectangle{ body.x - 1.0f, body.y + 10.0f, 1.0f, body.height - 20.0f };
+	Rectangle rectRight = Rectangle{ body.x + body.width + 1.0f, body.y + 10.0f, 1.0f, body.height - 20.0f };
+
+	Collision collision = Collision {false, false, false, false };
+
+	for (auto const& objectGroup : objectGroupData) {
+		for (auto const& object : objectGroup.objects) {
+			if (CheckCollisionRecs(rectTop, object.rectangle)) {
+				collision.top = true;
+			}
+			if (CheckCollisionRecs(rectBottom, object.rectangle)) {
+				collision.bottom = true;
+			}
+			if (CheckCollisionRecs(rectLeft, object.rectangle)) {
+				collision.left = true;
+			}
+			if (CheckCollisionRecs(rectRight, object.rectangle)) {
+				collision.right = true;
+			}
+		}
+	}
+
+	return collision;
 }

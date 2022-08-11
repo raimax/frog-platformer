@@ -13,6 +13,13 @@
 #define MAX_JUMP_HEIGHT 300.0f
 #endif // !MAX_JUMP_HEIGHT
 
+typedef struct Collision {
+	bool top;
+	bool bottom;
+	bool left;
+	bool right;
+} Collision;
+
 enum Direction
 {
 	left,
@@ -29,9 +36,9 @@ private:
 	Vector2 jumpStartPosition = Vector2{-1, -1};
 	struct ObjectState {
 		bool isAscending = false;
-		bool isDescending;
+		bool isDescending = true;
 		struct FacingDirection {
-			bool right;
+			bool right = true;
 			bool left = false;
 		} FacingDirection;
 	} State;
@@ -39,10 +46,7 @@ private:
 	void move(Direction direction, Map* map);
 	std::string currentAnimation = "player_fall_right";
 	void updateMovement(Map* map);
-	bool isCollidingBottom(std::vector<ObjectGroupData>& objectGroupData);
-	bool isCollidingTop(std::vector<ObjectGroupData>& objectGroupData);
-	bool isCollidingLeft(std::vector<ObjectGroupData>& objectGroupData);
-	bool isCollidingRight(std::vector<ObjectGroupData>& objectGroupData);
+	Collision checkCollision(std::vector<ObjectGroupData>& objectGroupData);
 
 public:
 	void draw() override;
