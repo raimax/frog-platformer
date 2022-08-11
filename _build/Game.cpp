@@ -25,6 +25,8 @@ void Game::init()
     InitWindow(windowWidth, windowHeight, "Game title");
     SetWindowMinSize(1280, 720);
 
+    font = LoadFont("assets/fonts/PixelEmulator-xq08.ttf");
+
     target = LoadRenderTexture(gameScreenWidth, gameScreenHeight);
     SetTextureFilter(target.texture, TEXTURE_FILTER_BILINEAR);
 

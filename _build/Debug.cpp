@@ -41,20 +41,20 @@ void Debug::drawMapCollisions()
 
 void Debug::drawPlayerState()
 {
-    DrawText(std::format(
+    DrawTextEx(gameInstance->font ,std::format(
         "Going up: {}",
-        gameInstance->getPlayer()->getState().isAscending).c_str(), (int)position.x, (int)position.y + 30, fontSize,
+        gameInstance->getPlayer()->getState().isAscending).c_str(), Vector2{ position.x, position.y + 30.0f }, fontSize, 1.0f,
         (gameInstance->getPlayer()->getState().isAscending ? GREEN : BLACK));
-    DrawText(std::format(
+    DrawTextEx(gameInstance->font, std::format(
         "Going down: {}",
-        gameInstance->getPlayer()->getState().isDescending).c_str(), (int)position.x, (int)position.y + 50, fontSize,
+        gameInstance->getPlayer()->getState().isDescending).c_str(), Vector2{ position.x, position.y + 50.0f }, fontSize, 1.0f,
         (gameInstance->getPlayer()->getState().isDescending ? GREEN : BLACK));
 
     if (gameInstance->getPlayer()->getState().FacingDirection.right) {
-        DrawText("Facing direction: right", (int)position.x, (int)position.y + 70, fontSize, BLACK);
+        DrawTextEx(gameInstance->font, "Facing direction: right", Vector2{ position.x, position.y + 70.0f }, fontSize, 1.0f, BLACK);
     }
     else {
-        DrawText("Facing direction: left", (int)position.x, (int)position.y + 70, fontSize, BLACK);
+        DrawTextEx(gameInstance->font, "Facing direction: left", Vector2{ position.x, position.y + 70.0f }, fontSize, 1.0f, BLACK);
     }
 }
 
@@ -62,16 +62,16 @@ void Debug::drawPlayerInfo()
 {
     Rectangle* playerBody = gameInstance->getPlayer()->getBody();
 
-    DrawText(TextFormat("x: %i", 
+    DrawTextEx(gameInstance->font, TextFormat("x: %i",
         (int)playerBody->x), 
-        (int)playerBody->x + (int)playerBody->width,
-        (int)playerBody->y - 16,
+        Vector2{ playerBody->x + playerBody->width, playerBody->y - 16.0f, },
         16, 
+        1.0f,
         BLACK);
-    DrawText(TextFormat("y: %i", 
+    DrawTextEx(gameInstance->font, TextFormat("y: %i",
         (int)playerBody->y),
-        (int)playerBody->x + (int)playerBody->width,
-        (int)playerBody->y,
+        Vector2{ playerBody->x + playerBody->width, playerBody->y },
         16, 
+        1.0f,
         BLACK);
 }

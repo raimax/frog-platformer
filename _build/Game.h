@@ -23,6 +23,7 @@ private:
 	AnimationManager* animationManager = new AnimationManager();
 	RenderTexture2D target;
 public:
+	Font font;
 	Map* level1;
 	~Game();
 	void start();
