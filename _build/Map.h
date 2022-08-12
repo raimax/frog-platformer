@@ -90,6 +90,10 @@ enum Layer {
 	FOREGROUND = 3
 };
 
+#ifndef BG_SCALE
+#define BG_SCALE 8.0f
+#endif // !BG_SCALE
+
 class Map
 {
 private:
@@ -98,6 +102,7 @@ private:
 	const float scale = 3.0f;
 	Rectangle frameRec;
 	Texture2D background;
+	std::string backgroundImageName;
 	std::vector<std::vector<int>> dataToLayer(const std::vector<int>& data);
 	std::vector<TileLayerData> layerData;
 	std::vector<TilesetData> tilesetData;
@@ -114,6 +119,7 @@ public:
 	//void draw();
 	void drawGroundLayer();
 	void drawForegroundLayer();
+	void drawBackgroundImage();
 	void setDimensions(int width, int height);
 	int* getWidth();
 	int* getHeight();
@@ -126,5 +132,7 @@ public:
 	Portal getAreaPortals();
 	void setNextScene(std::string nextScene);
 	std::string getNextScene();
+	void setBackground(Texture2D& texture);
+	void setBackgroundImageName(std::string name);
 };
 

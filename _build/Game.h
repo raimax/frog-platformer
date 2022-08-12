@@ -19,9 +19,9 @@ private:
 	const int windowWidth = 1280;
 	const int windowHeight = 720;
 	bool debugEnabled = false;
-	Debug* debug = new Debug(this, Vector2{5, 50});
-	SpriteManager* spriteManager = new SpriteManager();
-	AnimationManager* animationManager = new AnimationManager();
+	std::unique_ptr<Debug> debug = std::make_unique<Debug>(this, Vector2{ 5, 50 });
+	std::unique_ptr<SpriteManager> spriteManager = std::make_unique<SpriteManager>();
+	std::unique_ptr<AnimationManager> animationManager = std::make_unique<AnimationManager>();
 	RenderTexture2D target;
 public:
 	std::unique_ptr<SceneManager> sceneManager = std::make_unique<SceneManager>();

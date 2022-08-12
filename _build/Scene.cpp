@@ -15,6 +15,7 @@ Scene::Scene(std::unique_ptr<Map> map)
 void Scene::drawScene()
 {
 	if (player && map) {
+		map->drawBackgroundImage();
 		map->drawGroundLayer();
 		player->draw();
 		map->drawForegroundLayer();

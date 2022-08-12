@@ -89,6 +89,16 @@ std::unique_ptr<Map> MapLoader::parseMapFromJson(std::string pathToFile)
                 }
             }
         }
+        else if (layer["type"] == "imagelayer") {
+            if (layer["name"] == "BackgroundImage") {
+                //remove extension
+                std::string imgName = layer["image"];
+                size_t lastindex = imgName.find_last_of(".");
+                std::string name = imgName.substr(0, lastindex);
+
+                map->setBackground(SpriteManager::background[name]);
+            }
+        }
         
     }
 

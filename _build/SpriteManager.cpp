@@ -18,7 +18,7 @@ void SpriteManager::loadTextures()
 	};
 
 	background = {
-		{"main_background", LoadTexture("assets/scenes/bg.png")},
+		{"main_background", LoadTexture("assets/scenes/main_background.png")},
 	};
 
 	map = {

@@ -2,11 +2,6 @@
 #include <iostream>
 #include <format>
 
-#ifndef BG_SCALE
-#define BG_SCALE 8.0f
-#endif // !BG_SCALE
-
-
 void Game::start() {
     init();
 
@@ -44,17 +39,12 @@ void Game::draw()
     BeginTextureMode(target);
         ClearBackground(BLACK);  // Clear render texture background color
 
-        for (int i = 0; i < 10; i++) DrawRectangle(0, (gameScreenHeight / 10) * i, gameScreenWidth, gameScreenHeight / 10, WHITE);
-
-        DrawTextureEx(
-            SpriteManager::background["main_background"],
-            Vector2{ gameScreenWidth / 2 - 272 * (BG_SCALE / 2), gameScreenHeight / 2 - 160 * (BG_SCALE / 2) }, 0, BG_SCALE, WHITE);
         sceneManager->drawActiveScene();
 
         if (debugEnabled) {
+            DrawFPS(0, 0);
             debug->draw();
         }
-        DrawFPS(0, 0);
     EndTextureMode();
 
     BeginDrawing();
@@ -95,8 +85,5 @@ Player* Game::getPlayer()
 }
 
 Game::~Game() {
-    delete spriteManager;
-    delete animationManager;
-    delete debug;
     UnloadRenderTexture(target);
 }

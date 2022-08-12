@@ -196,3 +196,15 @@ void Map::setNextScene(std::string nextScene) {
 std::string Map::getNextScene() {
 	return nextScene;
 }
+
+void Map::setBackground(Texture2D& texture) {
+	background = texture;
+}
+
+void Map::setBackgroundImageName(std::string name) {
+	backgroundImageName = name;
+}
+
+void Map::drawBackgroundImage() {
+	DrawTextureEx(SpriteManager::background["main_background"], Vector2{0}, 0, scale, WHITE);
+}
