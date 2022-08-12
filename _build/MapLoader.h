@@ -9,6 +9,6 @@ class MapLoader
 private:
 	static nlohmann::json parseJson(std::string pathToFile);
 public:
-	static Map* parseMapFromJson(std::string pathToFile);
+	static std::unique_ptr<Map> parseMapFromJson(std::string pathToFile);
 };
 

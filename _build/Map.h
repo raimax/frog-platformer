@@ -90,7 +90,7 @@ class Map
 private:
 	int width;
 	int height;
-	const float scale = 4.0f;
+	const float scale = 3.0f;
 	Rectangle frameRec;
 	Texture2D background;
 	std::vector<std::vector<int>> dataToLayer(const std::vector<int>& data);

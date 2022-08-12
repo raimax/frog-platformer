@@ -7,7 +7,7 @@ nlohmann::json MapLoader::parseJson(std::string pathToFile)
     return nlohmann::json::parse(f);
 }
 
-Map* MapLoader::parseMapFromJson(std::string pathToFile)
+std::unique_ptr<Map> MapLoader::parseMapFromJson(std::string pathToFile)
 {
     nlohmann::json mapJson;
 
@@ -21,7 +21,7 @@ Map* MapLoader::parseMapFromJson(std::string pathToFile)
         return nullptr;
     }
 
-    Map* map = new Map();
+    auto map = std::make_unique<Map>();
 
     map->setDimensions(mapJson["width"], mapJson["height"]);
 

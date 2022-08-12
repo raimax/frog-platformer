@@ -18,11 +18,11 @@ void SpriteManager::loadTextures()
 	};
 
 	background = {
-		{"main_background", LoadTexture("assets/map/bg.png")},
+		{"main_background", LoadTexture("assets/scenes/bg.png")},
 	};
 
 	map = {
-		{"test_map_tileset", LoadTexture("assets/map/test_map_tileset.png")},
+		{"test_map_tileset", LoadTexture("assets/scenes/test_map_tileset.png")},
 	};
 }
 

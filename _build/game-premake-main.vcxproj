@@ -180,6 +180,8 @@
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="MapLoader.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="SpriteManager.cpp">
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Users\Vartotojas\Downloads\game\game-premake-main\include\tmx-master\src;C:\Users\Vartotojas\Downloads\game\game-premake-main\include\libxml2-master;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
@@ -198,6 +200,8 @@
     <ClInclude Include="Map.h" />
     <ClInclude Include="MapLoader.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="Scene.h" />
+    <ClInclude Include="SceneManager.h" />
     <ClInclude Include="SpriteManager.h" />
   </ItemGroup>
   <ItemGroup>

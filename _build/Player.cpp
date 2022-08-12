@@ -142,7 +142,7 @@ void Player::update(Map* map) {
 	if (State.isAscending) {
 		move(airborne, map);
 		if (IsKeyDown(KEY_SPACE) && currentJumpHeight < MAX_JUMP_HEIGHT) {
-			body.y -= GRAVITY * GetFrameTime();
+			body.y -= (GRAVITY / 2) * GetFrameTime();
 			currentJumpHeight += GRAVITY * GetFrameTime();
 		}
 		else {

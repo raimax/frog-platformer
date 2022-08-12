@@ -6,7 +6,7 @@
 #include "Map.h"
 
 #ifndef GRAVITY
-#define GRAVITY 700.0f
+#define GRAVITY 1000.0f
 #endif // !GRAVITY
 
 #ifndef MAX_JUMP_HEIGHT

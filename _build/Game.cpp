@@ -32,8 +32,7 @@ void Game::init()
 
     spriteManager->loadTextures();
     animationManager->loadAnimations();
-
-    level1 = MapLoader::parseMapFromJson("assets/map/test_map2.json");
+    sceneManager->loadScene("assets/scenes/test_map2.json");
 
     SetTargetFPS(60);
 }
@@ -50,33 +49,28 @@ void Game::draw()
         DrawTextureEx(
             SpriteManager::background["main_background"],
             Vector2{ gameScreenWidth / 2 - 272 * (BG_SCALE / 2), gameScreenHeight / 2 - 160 * (BG_SCALE / 2) }, 0, BG_SCALE, WHITE);
-        level1->drawGroundLayer();
-        player->draw();
-        level1->drawForegroundLayer();
+        sceneManager->drawActiveScene();
 
         debug->draw();
         DrawFPS(0, 0);
     EndTextureMode();
 
     BeginDrawing();
-
         ClearBackground(BLACK);
 
         DrawTexturePro(
             target.texture, 
             Rectangle { 0.0f, 0.0f, (float)target.texture.width, (float)-target.texture.height },
             Rectangle {
-            (GetScreenWidth() - ((float)gameScreenWidth * scale)) * 0.5f, (GetScreenHeight() - ((float)gameScreenHeight * scale)) * 0.5f,
-                (float)gameScreenWidth* scale, (float)gameScreenHeight* scale
-            }, 
+                (GetScreenWidth() - ((float)gameScreenWidth * scale)) * 0.5f, (GetScreenHeight() - ((float)gameScreenHeight * scale)) * 0.5f,
+                (float)gameScreenWidth* scale, (float)gameScreenHeight* scale}, 
             Vector2 { 0, 0 }, 0.0f, WHITE);
-
     EndDrawing();
 }
 
 void Game::update()
 {
-    player->update(level1);
+    sceneManager->getActiveScene()->updateScene();
 
     if (IsKeyPressed(KEY_F)) {
         SetWindowSize(1920, 1080);
@@ -86,14 +80,12 @@ void Game::update()
 
 Player* Game::getPlayer()
 {
-    return player;
+    return sceneManager->getActiveScene()->getPlayer();
 }
 
 Game::~Game() {
     delete spriteManager;
     delete animationManager;
-    delete level1;
-    delete player;
     delete debug;
     UnloadRenderTexture(target);
 }
