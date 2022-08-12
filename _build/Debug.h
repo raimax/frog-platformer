@@ -11,6 +11,7 @@ private:
 	void drawMapCollisions();
 	void drawPlayerState();
 	void drawPlayerInfo();
+	void drawPortals();
 public:
 	Debug(Game* gameInstance, Vector2 position);
 	~Debug();

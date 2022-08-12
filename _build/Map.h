@@ -79,6 +79,11 @@ typedef struct MapLayer {
 	std::vector<std::vector<int>> layerMatrix;
 } MapLayer;
 
+typedef struct Portal {
+	Rectangle areaEnter;
+	Rectangle areaExit;
+} Portal;
+
 enum Layer {
 	GROUND = 1,
 	COLLISION = 2,
@@ -94,11 +99,13 @@ private:
 	Rectangle frameRec;
 	Texture2D background;
 	std::vector<std::vector<int>> dataToLayer(const std::vector<int>& data);
-
 	std::vector<TileLayerData> layerData;
 	std::vector<TilesetData> tilesetData;
 	std::vector<MapLayer> mapLayers;
 	Rectangle getTileCoords(int layerId, int tileId);
+	Rectangle areaEnter;
+	Rectangle areaExit;
+	std::string nextScene;
 public:
 	std::vector<ObjectGroupData> objectGroupData;
 	~Map();
@@ -114,5 +121,10 @@ public:
 	void addLayerData(const TileLayerData& data);
 	void addObjectData(const ObjectGroupData& data);
 	float getScale();
+	void setAreaEnter(Rectangle rectangle);
+	void setAreaExit(Rectangle rectangle);
+	Portal getAreaPortals();
+	void setNextScene(std::string nextScene);
+	std::string getNextScene();
 };
 

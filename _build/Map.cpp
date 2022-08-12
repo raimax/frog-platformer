@@ -176,3 +176,23 @@ int* Map::getWidth() {
 int* Map::getHeight() {
 	return &height;
 }
+
+void Map::setAreaEnter(Rectangle rectangle) {
+	areaEnter = rectangle;
+}
+
+void Map::setAreaExit(Rectangle rectangle) {
+	areaExit = rectangle;
+}
+
+Portal Map::getAreaPortals() {
+	return Portal{ areaEnter, areaExit };
+}
+
+void Map::setNextScene(std::string nextScene) {
+	this->nextScene = nextScene;
+}
+
+std::string Map::getNextScene() {
+	return nextScene;
+}

@@ -18,6 +18,7 @@ private:
 	int gameScreenHeight = 1080;
 	const int windowWidth = 1280;
 	const int windowHeight = 720;
+	bool debugEnabled = false;
 	Debug* debug = new Debug(this, Vector2{5, 50});
 	SpriteManager* spriteManager = new SpriteManager();
 	AnimationManager* animationManager = new AnimationManager();
@@ -30,6 +31,7 @@ public:
 	void init();
 	void draw();
 	void update();
+	void toggleDebug();
 	Player* getPlayer();
 };
 

@@ -14,5 +14,9 @@ void SceneManager::drawActiveScene()
 {
 	if (activeScene) {
 		activeScene->drawScene();
+
+		if (activeScene->isNextSceneTriggered()) {
+			loadScene(activeScene->getNextScene());
+		}
 	}
 }

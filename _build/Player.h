@@ -37,6 +37,10 @@ private:
 	struct ObjectState {
 		bool isAscending = false;
 		bool isDescending = true;
+		bool isCollidingTop = false;
+		bool isCollidingBottom = false;
+		bool isCollidingLeft = false;
+		bool isCollidingRight = false;
 		struct FacingDirection {
 			bool right = true;
 			bool left = false;
@@ -46,7 +50,7 @@ private:
 	void move(Direction direction, Map* map);
 	std::string currentAnimation = "player_fall_right";
 	void updateMovement(Map* map);
-	Collision checkCollision(std::vector<ObjectGroupData>& objectGroupData);
+	void checkCollision(std::vector<ObjectGroupData>& objectGroupData);
 
 public:
 	void draw() override;

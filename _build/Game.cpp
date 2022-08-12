@@ -28,7 +28,7 @@ void Game::init()
     font = LoadFont("assets/fonts/PixelEmulator-xq08.ttf");
 
     target = LoadRenderTexture(gameScreenWidth, gameScreenHeight);
-    SetTextureFilter(target.texture, TEXTURE_FILTER_BILINEAR);
+    SetTextureFilter(target.texture, TEXTURE_FILTER_POINT);
 
     spriteManager->loadTextures();
     animationManager->loadAnimations();
@@ -51,7 +51,9 @@ void Game::draw()
             Vector2{ gameScreenWidth / 2 - 272 * (BG_SCALE / 2), gameScreenHeight / 2 - 160 * (BG_SCALE / 2) }, 0, BG_SCALE, WHITE);
         sceneManager->drawActiveScene();
 
-        debug->draw();
+        if (debugEnabled) {
+            debug->draw();
+        }
         DrawFPS(0, 0);
     EndTextureMode();
 
@@ -76,6 +78,15 @@ void Game::update()
         SetWindowSize(1920, 1080);
         ToggleFullscreen();
     }
+
+    if (IsKeyPressed(KEY_G)) {
+        toggleDebug();
+    }
+}
+
+void Game::toggleDebug()
+{
+    debugEnabled = !debugEnabled;
 }
 
 Player* Game::getPlayer()

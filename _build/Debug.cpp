@@ -18,6 +18,7 @@ void Debug::draw()
     drawMapCollisions();
     drawPlayerState();
     drawPlayerInfo();
+    drawPortals();
 }
 
 void Debug::drawMapCollisions()
@@ -80,4 +81,20 @@ void Debug::drawPlayerInfo()
             1.0f,
             BLACK);
     }
+}
+
+void Debug::drawPortals()
+{
+    Rectangle areaEnter = gameInstance->sceneManager->getActiveScene()->map->getAreaPortals().areaEnter;
+    Rectangle areaExit = gameInstance->sceneManager->getActiveScene()->map->getAreaPortals().areaExit;
+
+    DrawRectangleLinesEx(areaEnter, 2, BLACK);
+    DrawRectangleRounded(Rectangle{ areaEnter.x - areaEnter.width / 2 - 9.0f, areaEnter.y - 22.0f, 140.0f, 20.0f }, 10.0f, 4, BLACK);
+    DrawTextEx(gameInstance->font, "area enter", Vector2{ areaEnter.x - areaEnter.width / 2, areaEnter.y - 22.0f}, 18, 1.0f, RAYWHITE);
+
+
+    DrawRectangleLinesEx(areaExit, 2, BLACK);
+    DrawRectangleRounded(Rectangle{ areaExit.x - areaExit.width / 2 - 12.0f, areaExit.y - 22.0f, 135.0f, 20.0f }, 10.0f, 4, BLACK);
+    DrawTextEx(gameInstance->font, "area exit", Vector2{ areaExit.x - areaExit.width / 2, areaExit.y - 22.0f }, 18, 1.0f, RAYWHITE);
+    
 }
