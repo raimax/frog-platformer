@@ -1,15 +1,15 @@
 #include "Scene.h"
 #include "MapLoader.h"
 
-Scene::Scene(std::unique_ptr<Map> map)
+Scene::Scene(TransitionManager* transitionManager)
+{
+	transitionStart = transitionManager->transitions["fade_out"].get();
+	transitionEnd = transitionManager->transitions["fade_in"].get();
+}
+
+void Scene::setMap(std::unique_ptr<Map> map)
 {
 	this->map = std::move(map);
-	this->player = std::make_unique<Player>(Rectangle{ 
-		this->map->getAreaPortals().areaEnter.x,
-		this->map->getAreaPortals().areaEnter.y,
-		(this->map->getScale() * 16),
-		(this->map->getScale() * 16) });
-	this->nextScene = this->map->getNextScene();
 }
 
 void Scene::drawScene()
@@ -31,6 +31,16 @@ void Scene::updateScene()
 			isChanging = true;
 		}
 	}
+}
+
+void Scene::initPlayer()
+{
+	this->player = std::make_unique<Player>(Rectangle{
+		this->map->getAreaPortals().areaEnter.x,
+		this->map->getAreaPortals().areaEnter.y,
+		(this->map->getScale() * 16),
+		(this->map->getScale() * 16) });
+	this->nextScene = this->map->getNextScene();
 }
 
 Player* Scene::getPlayer()

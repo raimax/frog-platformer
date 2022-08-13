@@ -28,6 +28,7 @@ void Game::init()
     spriteManager->loadTextures();
     animationManager->loadAnimations();
     sceneManager->loadScene("assets/scenes/test_map2.json");
+    //transitionManager->loadTransitions();
 
     SetTargetFPS(60);
 }

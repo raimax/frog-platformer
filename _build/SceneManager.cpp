@@ -1,5 +1,10 @@
 #include "SceneManager.h"
 
+SceneManager::SceneManager(TransitionManager* transitionManager)
+{
+	this->transitionManager = transitionManager;
+}
+
 Scene* SceneManager::getActiveScene()
 {
 	return activeScene.get();
@@ -7,7 +12,10 @@ Scene* SceneManager::getActiveScene()
 
 void SceneManager::loadScene(std::string scenePath)
 {
-	activeScene = std::make_unique<Scene>(Scene(MapLoader::parseMapFromJson(scenePath)));
+	activeScene = std::make_unique<Scene>(Scene(transitionManager));
+	activeScene->setMap(MapLoader::parseMapFromJson(scenePath));
+	activeScene->initPlayer();
+	activeScene->transitionStart->reset();
 }
 
 void SceneManager::drawActiveScene()
@@ -16,7 +24,16 @@ void SceneManager::drawActiveScene()
 		activeScene->drawScene();
 
 		if (activeScene->isNextSceneTriggered()) {
-			loadScene(activeScene->getNextScene());
+			if (activeScene->transitionStart) {
+				activeScene->transitionStart->play();
+				if (activeScene->transitionStart->transitionEnded) {
+					loadScene(activeScene->getNextScene());
+				}
+			}
+			else {
+				loadScene(activeScene->getNextScene());
+			}
+			
 		}
 	}
 }

@@ -4,6 +4,9 @@
     <Filter Include="Source Files">
       <UniqueIdentifier>{E9C7FDCE-D52A-8D73-7EB0-C5296AF258F6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Transitions">
+      <UniqueIdentifier>{3e582f87-06ff-4252-925a-6e357a01a9fb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\game\src\raylib_game.cpp">
@@ -42,6 +45,14 @@
     <ClCompile Include="Scene.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="TransitionManager.cpp" />
+    <ClCompile Include="Transition.cpp" />
+    <ClCompile Include="FadeIn.cpp">
+      <Filter>Source Files\Transitions</Filter>
+    </ClCompile>
+    <ClCompile Include="FadeOut.cpp">
+      <Filter>Source Files\Transitions</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -76,6 +87,14 @@
     </ClInclude>
     <ClInclude Include="Scene.h">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TransitionManager.h" />
+    <ClInclude Include="Transition.h" />
+    <ClInclude Include="FadeIn.h">
+      <Filter>Source Files\Transitions</Filter>
+    </ClInclude>
+    <ClInclude Include="FadeOut.h">
+      <Filter>Source Files\Transitions</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

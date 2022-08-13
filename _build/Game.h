@@ -7,6 +7,7 @@
 #include "Map.h"
 #include "MapLoader.h"
 #include "SceneManager.h"
+#include "TransitionManager.h"
 
 #define MAX(a, b) ((a)>(b)? (a) : (b))
 #define MIN(a, b) ((a)<(b)? (a) : (b))
@@ -22,9 +23,10 @@ private:
 	std::unique_ptr<Debug> debug = std::make_unique<Debug>(this, Vector2{ 5, 50 });
 	std::unique_ptr<SpriteManager> spriteManager = std::make_unique<SpriteManager>();
 	std::unique_ptr<AnimationManager> animationManager = std::make_unique<AnimationManager>();
+	std::unique_ptr<TransitionManager> transitionManager = std::make_unique<TransitionManager>();
 	RenderTexture2D target;
 public:
-	std::unique_ptr<SceneManager> sceneManager = std::make_unique<SceneManager>();
+	std::unique_ptr<SceneManager> sceneManager = std::make_unique<SceneManager>(transitionManager.get());
 	Font font;
 	~Game();
 	void start();
