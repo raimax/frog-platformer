@@ -61,7 +61,7 @@
                         {
                          "name":"nextArea",
                          "type":"string",
-                         "value":"assets\/scenes\/test_map2.json"
+                         "value":"test_map2"
                         }],
                  "rotation":0,
                  "type":"portal",

@@ -2,10 +2,13 @@
 #include <iostream>
 #include <format>
 
+Font Game::font;
+bool Game::exitWindow;
+
 void Game::start() {
     init();
 
-    while (!WindowShouldClose())
+    while (!exitWindow)
     {
         update();
         draw();
@@ -21,13 +24,14 @@ void Game::init()
     SetWindowMinSize(1280, 720);
 
     font = LoadFont("assets/fonts/PixelEmulator-xq08.ttf");
+    exitWindow = false;
 
     target = LoadRenderTexture(GAME_SCREEN_WIDTH, GAME_SCREEN_HEIGHT);
     SetTextureFilter(target.texture, TEXTURE_FILTER_POINT);
 
     spriteManager->loadTextures();
     animationManager->loadAnimations();
-    sceneManager->loadScene("assets/scenes/test_map2.json");
+    sceneManager->loadScene("menu_scene");
 
     SetTargetFPS(60);
 }
@@ -62,6 +66,9 @@ void Game::draw()
 
 void Game::update()
 {
+    if (WindowShouldClose()) {
+        exitWindow = true;
+    }
     sceneManager->getActiveScene()->updateScene();
 
     if (IsKeyPressed(KEY_F)) {

@@ -1,5 +1,6 @@
 #include "Scene.h"
 #include "MapLoader.h"
+#include "SceneManager.h"
 
 Scene::Scene()
 {
@@ -55,4 +56,15 @@ bool Scene::isNextSceneTriggered()
 std::string Scene::getNextScene()
 {
 	return nextScene;
+}
+
+void Scene::triggerScene(std::string name)
+{
+	nextScene = name;
+	isChanging = true;
+}
+
+void Scene::setNextScene(std::string name)
+{
+	nextScene = name;
 }

@@ -302,7 +302,7 @@
                         {
                          "name":"nextArea",
                          "type":"string",
-                         "value":"assets\/scenes\/test_map3.json"
+                         "value":"test_map3"
                         }],
                  "rotation":0,
                  "type":"portal",

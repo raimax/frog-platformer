@@ -2,6 +2,8 @@
 #include "Scene.h"
 #include <memory>
 #include "MapLoader.h"
+#include "MenuScene.h"
+
 class SceneManager
 {
 private:

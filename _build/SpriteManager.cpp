@@ -26,16 +26,16 @@ void SpriteManager::loadTextures()
 	};
 }
 
-void SpriteManager::unloadTextures(/*std::vector<std::reference_wrapper<std::map<std::string, Texture2D>>> textureMaps*/)
+void SpriteManager::unloadTextures(std::vector<std::reference_wrapper<std::map<std::string, Texture2D>>> textureMaps)
 {
-	/*for (auto const& map: textureMaps)
+	for (auto const& map: textureMaps)
 	{
 		for (auto const& texture : map.get())
 		{
 			UnloadTexture(texture.second);
 		}
-	}*/
-	for (auto const& texture : player)
+	}
+	/*for (auto const& texture : player)
 	{
 		UnloadTexture(texture.second);
 	}
@@ -46,10 +46,10 @@ void SpriteManager::unloadTextures(/*std::vector<std::reference_wrapper<std::map
 	for (auto const& texture : map)
 	{
 		UnloadTexture(texture.second);
-	}
+	}*/
 }
 
 SpriteManager::~SpriteManager()
 {
-	unloadTextures();
+	unloadTextures({ {player}, {background}, {map} });
 }

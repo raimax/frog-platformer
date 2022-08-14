@@ -23,11 +23,11 @@ private:
 	std::unique_ptr<Debug> debug = std::make_unique<Debug>(this, Vector2{ 5, 50 });
 	std::unique_ptr<SpriteManager> spriteManager = std::make_unique<SpriteManager>();
 	std::unique_ptr<AnimationManager> animationManager = std::make_unique<AnimationManager>();
-	//std::unique_ptr<TransitionManager> transitionManager = std::make_unique<TransitionManager>();
 	RenderTexture2D target;
 public:
 	std::unique_ptr<SceneManager> sceneManager = std::make_unique<SceneManager>();
-	Font font;
+	static Font font;
+	static bool exitWindow;
 	~Game();
 	void start();
 	void init();

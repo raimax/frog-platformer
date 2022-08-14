@@ -7,9 +7,17 @@ Scene* SceneManager::getActiveScene()
 
 void SceneManager::loadScene(std::string scenePath)
 {
-	activeScene = std::make_unique<Scene>();
-	activeScene->setMap(MapLoader::parseMapFromJson(scenePath));
-	activeScene->initPlayer();
+	std::string prefix = "assets/scenes/";
+	std::string suffix = ".json";
+
+	if (scenePath == "menu_scene") {
+		activeScene = std::make_unique<MenuScene>();
+	}
+	else {
+		activeScene = std::make_unique<Scene>();
+		activeScene->setMap(MapLoader::parseMapFromJson(prefix + scenePath + suffix));
+		activeScene->initPlayer();
+	}
 }
 
 void SceneManager::drawActiveScene()

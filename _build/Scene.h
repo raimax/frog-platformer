@@ -18,10 +18,12 @@ public:
 	Scene();
 	void setMap(std::unique_ptr<Map> map);
 	void initPlayer();
-	void drawScene();
-	void updateScene();
+	virtual void drawScene();
+	virtual void updateScene();
 	Player* getPlayer();
 	bool isNextSceneTriggered();
+	void triggerScene(std::string name);
 	std::string getNextScene();
+	void setNextScene(std::string name);
 };
 
