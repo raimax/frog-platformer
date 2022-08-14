@@ -4,8 +4,3 @@
 void Transition::play()
 {
 }
-
-void Transition::reset()
-{
-	transitionEnded = false;
-}

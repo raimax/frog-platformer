@@ -22,20 +22,19 @@ void Game::init()
 
     font = LoadFont("assets/fonts/PixelEmulator-xq08.ttf");
 
-    target = LoadRenderTexture(gameScreenWidth, gameScreenHeight);
+    target = LoadRenderTexture(GAME_SCREEN_WIDTH, GAME_SCREEN_HEIGHT);
     SetTextureFilter(target.texture, TEXTURE_FILTER_POINT);
 
     spriteManager->loadTextures();
     animationManager->loadAnimations();
     sceneManager->loadScene("assets/scenes/test_map2.json");
-    //transitionManager->loadTransitions();
 
     SetTargetFPS(60);
 }
 
 void Game::draw()
 {
-    float scale = MIN((float)GetScreenWidth() / gameScreenWidth, (float)GetScreenHeight() / gameScreenHeight);
+    float scale = MIN((float)GetScreenWidth() / GAME_SCREEN_WIDTH, (float)GetScreenHeight() / GAME_SCREEN_HEIGHT);
 
     BeginTextureMode(target);
         ClearBackground(BLACK);  // Clear render texture background color
@@ -55,8 +54,8 @@ void Game::draw()
             target.texture, 
             Rectangle { 0.0f, 0.0f, (float)target.texture.width, (float)-target.texture.height },
             Rectangle {
-                (GetScreenWidth() - ((float)gameScreenWidth * scale)) * 0.5f, (GetScreenHeight() - ((float)gameScreenHeight * scale)) * 0.5f,
-                (float)gameScreenWidth* scale, (float)gameScreenHeight* scale}, 
+                (GetScreenWidth() - ((float)GAME_SCREEN_WIDTH * scale)) * 0.5f, (GetScreenHeight() - ((float)GAME_SCREEN_HEIGHT * scale)) * 0.5f,
+                (float)GAME_SCREEN_WIDTH* scale, (float)GAME_SCREEN_HEIGHT* scale},
             Vector2 { 0, 0 }, 0.0f, WHITE);
     EndDrawing();
 }
@@ -66,7 +65,6 @@ void Game::update()
     sceneManager->getActiveScene()->updateScene();
 
     if (IsKeyPressed(KEY_F)) {
-        SetWindowSize(1920, 1080);
         ToggleFullscreen();
     }
 

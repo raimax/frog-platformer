@@ -1,10 +1,9 @@
 #include "Scene.h"
 #include "MapLoader.h"
 
-Scene::Scene(TransitionManager* transitionManager)
+Scene::Scene()
 {
-	transitionStart = transitionManager->transitions["fade_out"].get();
-	transitionEnd = transitionManager->transitions["fade_in"].get();
+
 }
 
 void Scene::setMap(std::unique_ptr<Map> map)

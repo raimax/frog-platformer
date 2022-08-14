@@ -15,18 +15,18 @@
 class Game
 {
 private:
-	int gameScreenWidth = 1920;
-	int gameScreenHeight = 1080;
+	const int GAME_SCREEN_WIDTH = 1920;
+	const int GAME_SCREEN_HEIGHT = 1080;
 	const int windowWidth = 1280;
 	const int windowHeight = 720;
 	bool debugEnabled = false;
 	std::unique_ptr<Debug> debug = std::make_unique<Debug>(this, Vector2{ 5, 50 });
 	std::unique_ptr<SpriteManager> spriteManager = std::make_unique<SpriteManager>();
 	std::unique_ptr<AnimationManager> animationManager = std::make_unique<AnimationManager>();
-	std::unique_ptr<TransitionManager> transitionManager = std::make_unique<TransitionManager>();
+	//std::unique_ptr<TransitionManager> transitionManager = std::make_unique<TransitionManager>();
 	RenderTexture2D target;
 public:
-	std::unique_ptr<SceneManager> sceneManager = std::make_unique<SceneManager>(transitionManager.get());
+	std::unique_ptr<SceneManager> sceneManager = std::make_unique<SceneManager>();
 	Font font;
 	~Game();
 	void start();

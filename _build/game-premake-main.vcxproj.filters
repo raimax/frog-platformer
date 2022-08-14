@@ -45,12 +45,13 @@
     <ClCompile Include="Scene.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="TransitionManager.cpp" />
-    <ClCompile Include="Transition.cpp" />
-    <ClCompile Include="FadeIn.cpp">
+    <ClCompile Include="FadeOut.cpp">
       <Filter>Source Files\Transitions</Filter>
     </ClCompile>
-    <ClCompile Include="FadeOut.cpp">
+    <ClCompile Include="Transition.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="FadeIn.cpp">
       <Filter>Source Files\Transitions</Filter>
     </ClCompile>
   </ItemGroup>
@@ -88,13 +89,14 @@
     <ClInclude Include="Scene.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="TransitionManager.h" />
-    <ClInclude Include="Transition.h" />
     <ClInclude Include="FadeIn.h">
       <Filter>Source Files\Transitions</Filter>
     </ClInclude>
     <ClInclude Include="FadeOut.h">
       <Filter>Source Files\Transitions</Filter>
+    </ClInclude>
+    <ClInclude Include="Transition.h">
+      <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

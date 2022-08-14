@@ -2,6 +2,8 @@
 #include "Player.h"
 #include "Transition.h"
 #include "TransitionManager.h"
+#include "FadeOut.h"
+#include "FadeIn.h"
 
 class Scene
 {
@@ -10,10 +12,10 @@ private:
 	std::string nextScene;
 	bool isChanging = false;
 public:
-	Transition* transitionStart;
-	Transition* transitionEnd;
+	std::unique_ptr<Transition> transitionStart = std::make_unique<FadeOut>();
+	std::unique_ptr<Transition> transitionEnd = std::make_unique<FadeIn>();
 	std::unique_ptr<Map> map;
-	Scene(TransitionManager* transitionManager);
+	Scene();
 	void setMap(std::unique_ptr<Map> map);
 	void initPlayer();
 	void drawScene();

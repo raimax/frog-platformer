@@ -1,9 +1,10 @@
 #include "FadeOut.h"
+#include <iostream>
 
 void FadeOut::play()
 {
 	if (!transitionEnded) {
-		opacity += opacity * GetFrameTime() * 8.0f;
+		opacity += opacity * GetFrameTime() * 15.0f;
 		if (opacity >= 255) {
 			opacity = 255;
 			transitionEnded = true;
