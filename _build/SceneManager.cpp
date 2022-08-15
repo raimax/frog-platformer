@@ -1,4 +1,6 @@
 #include "SceneManager.h"
+#include "SettingsScene.h"
+#include "VideoSettingsScene.h"
 
 Scene* SceneManager::getActiveScene()
 {
@@ -12,6 +14,12 @@ void SceneManager::loadScene(std::string scenePath)
 
 	if (scenePath == "menu_scene") {
 		activeScene = std::make_unique<MenuScene>();
+	}
+	else if (scenePath == "settings_scene") {
+		activeScene = std::make_unique<SettingsScene>();
+	}
+	else if (scenePath == "video_settings_scene") {
+		activeScene = std::make_unique<VideoSettingsScene>();
 	}
 	else {
 		activeScene = std::make_unique<Scene>();

@@ -1,12 +1,12 @@
-#include "MenuScene.h"
+#include "SettingsScene.h"
 #include "Game.h"
 
-void MenuScene::drawScene()
+void SettingsScene::drawScene()
 {
 	Scene::drawScene();
 
 	ClearBackground(BLACK);
-	
+
 	for (int i = 0; i < menuItems.size(); i++)
 	{
 		if (i == selectedItem) {
@@ -16,7 +16,7 @@ void MenuScene::drawScene()
 	}
 }
 
-void MenuScene::updateScene()
+void SettingsScene::updateScene()
 {
 	Scene::updateScene();
 
@@ -36,19 +36,18 @@ void MenuScene::updateScene()
 	if (IsKeyPressed(KEY_ENTER)) {
 		switch (selectedItem)
 		{
-			case PLAY:
-				triggerScene("test_map2");
-				break;
-			case STATS:
-				break;
-			case SETTINGS:
-				triggerScene("settings_scene");
-				break;
-			case QUIT:
-				Game::exitWindow = true;
-				break;
-			default:
-				break;
+		case VIDEO:
+			triggerScene("video_settings_scene");
+			break;
+		case AUDIO:
+			break;
+		case KEY_BINDINGS:
+			break;
+		case BACK_TO_MENU:
+			triggerScene("menu_scene");
+			break;
+		default:
+			break;
 		}
 	}
 }

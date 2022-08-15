@@ -185,10 +185,12 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
+    <ClCompile Include="SettingsScene.cpp" />
     <ClCompile Include="SpriteManager.cpp">
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Users\Vartotojas\Downloads\game\game-premake-main\include\tmx-master\src;C:\Users\Vartotojas\Downloads\game\game-premake-main\include\libxml2-master;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <ClCompile Include="Transition.cpp" />
+    <ClCompile Include="VideoSettingsScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="raylib.vcxproj">
@@ -209,8 +211,10 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
+    <ClInclude Include="SettingsScene.h" />
     <ClInclude Include="SpriteManager.h" />
     <ClInclude Include="Transition.h" />
+    <ClInclude Include="VideoSettingsScene.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="game-premake-main.rc" />
