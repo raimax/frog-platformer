@@ -35,15 +35,6 @@ void Player::move(Direction direction, Map* map)
 			}
 			break;
 		}
-		else if (State.isDescending) {
-			if (State.FacingDirection.left) {
-				currentAnimation = "player_fall_left";
-			}
-			else {
-				currentAnimation = "player_fall_right";
-			}
-			break;
-		};
 		currentAnimation = "player_walk_left";
 		break;
 	case RIGHT:
@@ -57,15 +48,6 @@ void Player::move(Direction direction, Map* map)
 			}
 			break;
 		}
-		else if (State.isDescending) {
-			if (State.FacingDirection.left) {
-				currentAnimation = "player_fall_left";
-			}
-			else {
-				currentAnimation = "player_fall_right";
-			}
-			break;
-		};
 		currentAnimation = "player_walk_right";
 		break;
 	case UP:
@@ -83,14 +65,6 @@ void Player::move(Direction direction, Map* map)
 				currentAnimation = "player_jump_right";
 			}
 		}
-		if (State.isDescending) {
-			if (State.FacingDirection.left) {
-				currentAnimation = "player_fall_left";
-			}
-			else {
-				currentAnimation = "player_fall_right";
-			}
-		};
 		break;
 	case IDLE:
 		if (State.FacingDirection.left) {
@@ -115,18 +89,6 @@ void Player::update(Map* map) {
 	updateMovement(map);
 
 	if (ySpeed == 0) {
-		State.isAscending = false;
-		State.isDescending = false;
-	}
-	else if (ySpeed == MAX_JUMP_HEIGHT) {
-		State.isDescending = true;
-	}
-
-	if (State.isAscending) {
-		State.isDescending = false;
-	}
-
-	if (State.isDescending) {
 		State.isAscending = false;
 	}
 
@@ -176,7 +138,7 @@ void Player::updateMovement(Map* map) {
 	else if (IsKeyDown(KEY_D) && !IsKeyDown(KEY_A)) {
 		move(RIGHT, map);
 	}
-	else if (!State.isAscending && !State.isDescending) {
+	else if (!State.isAscending) {
 		move(IDLE, map);
 	}
 
@@ -190,11 +152,11 @@ Player::ObjectState Player::getState()
 	return State;
 }
 
-bool Player::checkCollision(std::vector<ObjectGroupData>& objectGroupData, Rectangle body) {
+bool Player::checkCollision(std::vector<ObjectGroupData>& objectGroupData, Rectangle hitBox) {
 	for (auto const& objectGroup : objectGroupData) {
 		if (objectGroup.id == COLLISION) {
 			for (auto const& object : objectGroup.objects) {
-				if (CheckCollisionRecs(body, object.rectangle)) {
+				if (CheckCollisionRecs(hitBox, object.rectangle)) {
 					return true;
 				}
 			}

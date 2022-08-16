@@ -6,19 +6,11 @@
 #include "Map.h"
 #include "Helper.h"
 
-typedef struct Collision {
-	bool top;
-	bool bottom;
-	bool left;
-	bool right;
-} Collision;
-
 enum Direction
 {
 	LEFT,
 	RIGHT,
 	IDLE,
-	AIRBORNE,
 	UP
 };
 
@@ -29,11 +21,8 @@ private:
 	float ySpeed = 0;
 	float xMaxSpeed = 7;
 	const float MAX_JUMP_HEIGHT = -10.0f;
-	float currentJumpHeight = 0;
-	Vector2 jumpStartPosition = Vector2{-1, -1};
 	struct ObjectState {
 		bool isAscending = false;
-		bool isDescending = true;
 		bool isCollidingTop = false;
 		bool isCollidingBottom = false;
 		bool isCollidingLeft = false;
@@ -47,7 +36,7 @@ private:
 	void move(Direction direction, Map* map);
 	std::string currentAnimation = "player_fall_right";
 	void updateMovement(Map* map);
-	bool checkCollision(std::vector<ObjectGroupData>& objectGroupData, Rectangle body);
+	bool checkCollision(std::vector<ObjectGroupData>& objectGroupData, Rectangle hitBox);
 
 public:
 	void draw() override;
