@@ -4,12 +4,13 @@
 class GameObject
 {
 protected:
-	Rectangle body;
+	Rectangle hitBox;
+	Vector2 position;
 public:
 	~GameObject();
 	GameObject(Rectangle body);
-	Rectangle* getBody();
-	void update();
+	Rectangle* getHitBox();
+	virtual void update();
 	virtual void draw();
 };
 

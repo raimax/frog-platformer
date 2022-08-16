@@ -66,7 +66,7 @@ void Debug::drawPlayerState()
 void Debug::drawPlayerInfo()
 {
     if (gameInstance->getPlayer()) {
-        Rectangle* playerBody = gameInstance->getPlayer()->getBody();
+        Rectangle* playerBody = gameInstance->getPlayer()->getHitBox();
 
         DrawTextEx(gameInstance->font, TextFormat("x: %i",
             (int)playerBody->x),

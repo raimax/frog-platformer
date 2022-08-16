@@ -69,6 +69,9 @@
     <ClCompile Include="LevelScene.cpp">
       <Filter>Source Files\Scenes</Filter>
     </ClCompile>
+    <ClCompile Include="Helper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -125,6 +128,10 @@
     <ClInclude Include="LevelScene.h">
       <Filter>Source Files\Scenes</Filter>
     </ClInclude>
+    <ClInclude Include="Helper.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="findme.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="game-premake-main.rc" />

@@ -179,6 +179,7 @@
     <ClCompile Include="FadeOut.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="Helper.cpp" />
     <ClCompile Include="LevelScene.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="MapLoader.cpp" />
@@ -204,8 +205,10 @@
     <ClInclude Include="Debug.h" />
     <ClInclude Include="FadeIn.h" />
     <ClInclude Include="FadeOut.h" />
+    <ClInclude Include="findme.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="Helper.h" />
     <ClInclude Include="LevelScene.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="MapLoader.h" />

@@ -8,4 +8,3 @@ int main(void)
     game->start();
     return 0;
 }
-

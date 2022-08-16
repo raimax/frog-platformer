@@ -4,14 +4,7 @@
 #include "AnimationManager.h"
 #include <vector>
 #include "Map.h"
-
-#ifndef GRAVITY
-#define GRAVITY 1000.0f
-#endif // !GRAVITY
-
-#ifndef MAX_JUMP_HEIGHT
-#define MAX_JUMP_HEIGHT 300.0f
-#endif // !MAX_JUMP_HEIGHT
+#include "Helper.h"
 
 typedef struct Collision {
 	bool top;
@@ -22,16 +15,20 @@ typedef struct Collision {
 
 enum Direction
 {
-	left,
-	right,
-	idle,
-	airborne
+	LEFT,
+	RIGHT,
+	IDLE,
+	AIRBORNE,
+	UP
 };
 
 class Player : public GameObject
 {
 private:
-	float horizontalSpeed = 400.0f;
+	float xSpeed = 0;
+	float ySpeed = 0;
+	float xMaxSpeed = 7;
+	const float MAX_JUMP_HEIGHT = -10.0f;
 	float currentJumpHeight = 0;
 	Vector2 jumpStartPosition = Vector2{-1, -1};
 	struct ObjectState {
@@ -50,7 +47,7 @@ private:
 	void move(Direction direction, Map* map);
 	std::string currentAnimation = "player_fall_right";
 	void updateMovement(Map* map);
-	void checkCollision(std::vector<ObjectGroupData>& objectGroupData);
+	bool checkCollision(std::vector<ObjectGroupData>& objectGroupData, Rectangle body);
 
 public:
 	void draw() override;

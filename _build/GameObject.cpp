@@ -1,15 +1,21 @@
 #include "GameObject.h"
 
 GameObject::GameObject(Rectangle body) {
-	this->body = body;
+	this->position.x = body.x;
+	this->position.y = body.y;
+	this->hitBox = body;
 }
 
-Rectangle* GameObject::getBody() {
-	return &body;
+Rectangle* GameObject::getHitBox() {
+	return &hitBox;
+}
+
+void GameObject::update() {
+
 }
 
 void GameObject::draw() {
-	DrawRectangle((int)body.x, (int)body.y, (int)body.width, (int)body.height, BLACK);
+	//DrawRectanglePro(hitBox, Vector2{0, 0}, 0.0f, BLACK);
 }
 
 GameObject::~GameObject() {

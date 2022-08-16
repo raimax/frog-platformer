@@ -22,7 +22,7 @@ void Scene::updateScene()
 	if (player && map) {
 		player->update(map.get());
 
-		if (CheckCollisionRecs(*player->getBody(), map->getAreaPortals().areaExit)) {
+		if (CheckCollisionRecs(*player->getHitBox(), map->getAreaPortals().areaExit)) {
 			isChanging = true;
 		}
 	}
