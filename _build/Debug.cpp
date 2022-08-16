@@ -23,8 +23,8 @@ void Debug::draw()
 
 void Debug::drawMapCollisions()
 {
-    if (gameInstance->sceneManager->getActiveScene()) {
-        for (auto& objectGroup : gameInstance->sceneManager->getActiveScene()->map->objectGroupData) {
+    if (gameInstance->getSceneManager()->getActiveScene()) {
+        for (auto& objectGroup : gameInstance->getSceneManager()->getActiveScene()->map->objectGroupData) {
             if (objectGroup.name == "Collision") {
                 for (auto& object : objectGroup.objects)
                 {
@@ -85,8 +85,8 @@ void Debug::drawPlayerInfo()
 
 void Debug::drawPortals()
 {
-    Rectangle areaEnter = gameInstance->sceneManager->getActiveScene()->map->getAreaPortals().areaEnter;
-    Rectangle areaExit = gameInstance->sceneManager->getActiveScene()->map->getAreaPortals().areaExit;
+    Rectangle areaEnter = gameInstance->getSceneManager()->getActiveScene()->map->getAreaPortals().areaEnter;
+    Rectangle areaExit = gameInstance->getSceneManager()->getActiveScene()->map->getAreaPortals().areaExit;
 
     DrawRectangleLinesEx(areaEnter, 2, BLACK);
     DrawRectangleRounded(Rectangle{ areaEnter.x - areaEnter.width / 2 - 9.0f, areaEnter.y - 22.0f, 140.0f, 20.0f }, 10.0f, 4, BLACK);

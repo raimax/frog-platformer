@@ -93,3 +93,7 @@ Player* Game::getPlayer()
 Game::~Game() {
     UnloadRenderTexture(target);
 }
+
+SceneManager* Game::getSceneManager() {
+    return sceneManager.get();
+}

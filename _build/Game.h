@@ -24,8 +24,8 @@ private:
 	std::unique_ptr<SpriteManager> spriteManager = std::make_unique<SpriteManager>();
 	std::unique_ptr<AnimationManager> animationManager = std::make_unique<AnimationManager>();
 	RenderTexture2D target;
-public:
 	std::unique_ptr<SceneManager> sceneManager = std::make_unique<SceneManager>();
+public:
 	static Font font;
 	static bool exitWindow;
 	~Game();
@@ -35,5 +35,6 @@ public:
 	void update();
 	void toggleDebug();
 	Player* getPlayer();
+	SceneManager* getSceneManager();
 };
 

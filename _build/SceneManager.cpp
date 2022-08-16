@@ -42,12 +42,11 @@ void SceneManager::drawActiveScene()
 				activeScene->transitionStart->play();
 				if (activeScene->transitionStart->transitionEnded) {
 					loadScene(activeScene->getNextScene());
-				}
+				}	
 			}
 			else {
 				loadScene(activeScene->getNextScene());
 			}
-			
 		}
 	}
 }
