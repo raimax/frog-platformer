@@ -1,6 +1,7 @@
 #include "SceneManager.h"
 #include "SettingsScene.h"
 #include "VideoSettingsScene.h"
+#include "LevelScene.h"
 
 Scene* SceneManager::getActiveScene()
 {
@@ -9,9 +10,6 @@ Scene* SceneManager::getActiveScene()
 
 void SceneManager::loadScene(std::string scenePath)
 {
-	std::string prefix = "assets/scenes/";
-	std::string suffix = ".json";
-
 	if (scenePath == "menu_scene") {
 		activeScene = std::make_unique<MenuScene>();
 	}
@@ -22,7 +20,10 @@ void SceneManager::loadScene(std::string scenePath)
 		activeScene = std::make_unique<VideoSettingsScene>();
 	}
 	else {
-		activeScene = std::make_unique<Scene>();
+		std::string prefix = "assets/scenes/";
+		std::string suffix = ".json";
+
+		activeScene = std::make_unique<LevelScene>();
 		activeScene->setMap(MapLoader::parseMapFromJson(prefix + scenePath + suffix));
 		activeScene->initPlayer();
 	}

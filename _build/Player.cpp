@@ -109,12 +109,19 @@ void Player::move(Direction direction, Map* map)
 
 void Player::draw() {
 	AnimationManager::playAnimation(currentAnimation, this);
-	//Rectangle rectBottom = Rectangle{ body.x + 10.0f, body.y + body.height, body.width - 20.0f, 10.0f };
-	//hitbox
-	//DrawRectangleLinesEx(rectBottom, 2, BLACK);
-	//DrawRectangleLinesEx(rectTop, 2, BLACK);
-	//DrawRectangleLinesEx(rectLeft, 2, BLACK);
-	//DrawRectangleLinesEx(rectRight, 2, BLACK);
+	//DrawRectangleLinesEx(body, 1, BLACK);
+	//
+	//Rectangle rectTop = Rectangle{ body.x + 1.0f, body.y, body.width - 2.0f, 1.0f };
+	//Rectangle rectBottom = Rectangle{ body.x + 1.0f, body.y + body.height -1.0f, body.width - 2.0f, 1.0f };
+	//Rectangle rectLeft = Rectangle{ body.x, body.y + 1.0f, 1.0f, body.height - 2.0f };
+	//Rectangle rectRight = Rectangle{ body.x + body.width - 1.0f, body.y + 1.0f, 1.0f, body.height - 2.0f };
+	////hitbox
+	//DrawRectangleLinesEx(rectBottom, 1, RED);
+	//DrawRectangleLinesEx(rectTop, 1, RED);
+	//DrawRectangleLinesEx(rectLeft, 1, RED);
+	//DrawRectangleLinesEx(rectRight, 1, RED);
+
+	
 }
 
 Player::Player(Rectangle rectangle) : GameObject(rectangle) {}
@@ -122,12 +129,6 @@ Player::Player(Rectangle rectangle) : GameObject(rectangle) {}
 void Player::update(Map* map) {
 	updateMovement(map);
 	
-
-	if (State.isDescending) {
-		move(airborne, map);
-		State.isAscending = false;
-		body.y += (GRAVITY / 2) * GetFrameTime();
-	}
 
 	if (State.isCollidingBottom) {
 		State.isDescending = false;
@@ -141,6 +142,12 @@ void Player::update(Map* map) {
 		currentJumpHeight = MAX_JUMP_HEIGHT;
 	}
 
+	if (State.isDescending) {
+		move(airborne, map);
+		State.isAscending = false;
+		body.y += (GRAVITY / 2) * GetFrameTime();
+	}
+
 	if (State.isAscending) {
 		move(airborne, map);
 		if (IsKeyDown(KEY_SPACE) && currentJumpHeight < MAX_JUMP_HEIGHT) {
@@ -151,7 +158,7 @@ void Player::update(Map* map) {
 			State.isDescending = true;
 		}		
 	}
-
+	
 	checkCollision(map->objectGroupData);
 }
 
@@ -177,7 +184,7 @@ Player::ObjectState Player::getState()
 
 void Player::checkCollision(std::vector<ObjectGroupData>& objectGroupData) {
 	Rectangle rectTop = Rectangle{ body.x + 10.0f, body.y, body.width - 20.0f, 1.0f };
-	Rectangle rectBottom = Rectangle{ body.x + 10.0f, body.y + body.height, body.width - 20.0f, 10.0f };
+	Rectangle rectBottom = Rectangle{ body.x + 10.0f, body.y + body.height, body.width - 20.0f, 1.0f };
 	Rectangle rectLeft = Rectangle{ body.x - 1.0f, body.y + 10.0f, 1.0f, body.height - 20.0f };
 	Rectangle rectRight = Rectangle{ body.x + body.width + 1.0f, body.y + 10.0f, 1.0f, body.height - 20.0f };
 

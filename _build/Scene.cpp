@@ -2,11 +2,6 @@
 #include "MapLoader.h"
 #include "SceneManager.h"
 
-Scene::Scene()
-{
-
-}
-
 void Scene::setMap(std::unique_ptr<Map> map)
 {
 	this->map = std::move(map);

@@ -12,18 +12,17 @@ private:
 	std::string nextScene;
 	bool isChanging = false;
 public:
-	std::unique_ptr<Transition> transitionStart = std::make_unique<FadeOut>();
-	std::unique_ptr<Transition> transitionEnd = std::make_unique<FadeIn>();
+	std::unique_ptr<Transition> transitionStart;
+	std::unique_ptr<Transition> transitionEnd;
 	std::unique_ptr<Map> map;
-	Scene();
-	void setMap(std::unique_ptr<Map> map);
-	void initPlayer();
 	virtual void drawScene();
 	virtual void updateScene();
-	Player* getPlayer();
 	bool isNextSceneTriggered();
 	void triggerScene(std::string name);
 	std::string getNextScene();
 	void setNextScene(std::string name);
+	void setMap(std::unique_ptr<Map> map);
+	void initPlayer();
+	Player* getPlayer();
 };
 
