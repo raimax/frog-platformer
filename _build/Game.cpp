@@ -31,7 +31,7 @@ void Game::init()
 
     spriteManager->loadTextures();
     animationManager->loadAnimations();
-    sceneManager->loadScene("menu_scene");
+    sceneManager->loadScene("test_map2");
 
     SetTargetFPS(60);
 }

@@ -11,7 +11,7 @@ enum Direction
 	LEFT,
 	RIGHT,
 	IDLE,
-	UP
+	UP,
 };
 
 class Player : public GameObject
@@ -20,9 +20,13 @@ private:
 	float xSpeed = 0;
 	float ySpeed = 0;
 	float xMaxSpeed = 7;
-	const float MAX_JUMP_HEIGHT = -10.0f;
+	const float MAX_JUMP_HEIGHT = 20.0f;
+	float currentJumpHeight = 0;
+	bool doubleJump = true;
+	int jumps = 2;
 	struct ObjectState {
 		bool isAscending = false;
+		bool isDescending = true;
 		bool isCollidingTop = false;
 		bool isCollidingBottom = false;
 		bool isCollidingLeft = false;

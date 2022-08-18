@@ -49,10 +49,10 @@ void Debug::drawPlayerState()
             "Going up: {}",
             gameInstance->getPlayer()->getState().isAscending).c_str(), Vector2{ position.x, position.y + 30.0f }, fontSize, 1.0f,
             (gameInstance->getPlayer()->getState().isAscending ? GREEN : BLACK));
-        /*DrawTextEx(gameInstance->font, std::format(
+        DrawTextEx(gameInstance->font, std::format(
             "Going down: {}",
             gameInstance->getPlayer()->getState().isDescending).c_str(), Vector2{ position.x, position.y + 50.0f }, fontSize, 1.0f,
-            (gameInstance->getPlayer()->getState().isDescending ? GREEN : BLACK));*/
+            (gameInstance->getPlayer()->getState().isDescending ? GREEN : BLACK));
 
         if (gameInstance->getPlayer()->getState().FacingDirection.right) {
             DrawTextEx(gameInstance->font, "Facing direction: right", Vector2{ position.x, position.y + 70.0f }, fontSize, 1.0f, BLACK);
