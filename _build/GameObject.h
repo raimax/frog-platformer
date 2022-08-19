@@ -10,6 +10,7 @@ public:
 	~GameObject();
 	GameObject(Rectangle body);
 	Rectangle* getHitBox();
+	Vector2* getPosition();
 	virtual void update();
 	virtual void draw();
 };

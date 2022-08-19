@@ -20,7 +20,7 @@ private:
 	float xSpeed = 0;
 	float ySpeed = 0;
 	float xMaxSpeed = 7;
-	const float MAX_JUMP_HEIGHT = 20.0f;
+	const float MAX_JUMP_HEIGHT = 15.0f;
 	float currentJumpHeight = 0;
 	bool doubleJump = true;
 	int jumps = 2;
@@ -37,10 +37,14 @@ private:
 		} FacingDirection;
 	} State;
 	void setFacingDirection(Direction direction);
-	void move(Direction direction, Map* map);
+	void move(int x, int y, Map* map);
+	void checkX(int x, Map* map);
+	void checkY(int y, Map* map);
 	std::string currentAnimation = "player_fall_right";
 	void updateMovement(Map* map);
-	bool checkCollision(std::vector<ObjectGroupData>& objectGroupData, Rectangle hitBox);
+	Rectangle checkCollision(std::vector<ObjectGroupData>& objectGroupData, Rectangle hitBox);
+	void updateCollisionDirections(int x, int y);
+	void resetCollisionDirections();
 
 public:
 	void draw() override;

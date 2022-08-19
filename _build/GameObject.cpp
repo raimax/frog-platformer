@@ -10,6 +10,11 @@ Rectangle* GameObject::getHitBox() {
 	return &hitBox;
 }
 
+Vector2* GameObject::getPosition()
+{
+	return &position;
+}
+
 void GameObject::update() {
 
 }
