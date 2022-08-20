@@ -19,7 +19,7 @@ void Player::setFacingDirection(Direction direction)
 	}
 }
 
-void Player::move(int x, int y, Map* map)
+void Player::move(float x, float y, Map* map)
 {
 	if (x > 0) {
 		setFacingDirection(RIGHT);
@@ -32,17 +32,18 @@ void Player::move(int x, int y, Map* map)
 		checkX(x, map);
 	}
 	if (y != 0) {
-		checkY(y, map);
+		if (currentJumpHeight < MAX_JUMP_HEIGHT || y > 0) {
+			checkY(y, map);
+		}
 	}
 }
 
-void Player::checkX(int x, Map* map)
+void Player::checkX(float x, Map* map)
 {
 	hitBox.x += x;
 	Rectangle rec = checkCollision(map->objectGroupData, hitBox);
 
 	if (rec.width != 0) {
-		
 		hitBox.x -= x;
 		while (!CheckCollisionRecs(hitBox, rec)) hitBox.x += Helper::sgn(x);
 		hitBox.x -= Helper::sgn(x);
@@ -50,11 +51,10 @@ void Player::checkX(int x, Map* map)
 	}
 	else {
 		position.x += x;
-		
 	}
 }
 
-void Player::checkY(int y, Map* map)
+void Player::checkY(float y, Map* map)
 {
 	hitBox.y += y;
 	Rectangle rec = checkCollision(map->objectGroupData, hitBox);
@@ -68,12 +68,20 @@ void Player::checkY(int y, Map* map)
 	}
 	else {
 		position.y += y;
-		currentJumpHeight += 0.2f;
+		if (y < 0) {
+			currentJumpHeight += 1.0f;
+		}
+		resetCollisionDirections();
 	}
 }
 
 void Player::draw() {
 	AnimationManager::playAnimation(currentAnimation, this);
+
+	DrawText("TOP", 200, 200, 28, State.isCollidingTop ? GREEN : BLACK);
+	DrawText("BOTTOM", 200, 230, 28, State.isCollidingBottom ? GREEN : BLACK);
+	DrawText("LEFT ", 200, 260, 28, State.isCollidingLeft ? GREEN : BLACK);
+	DrawText("RIGHT", 200, 290, 28, State.isCollidingRight ? GREEN : BLACK);
 }
 
 Player::Player(Rectangle rectangle) : GameObject(rectangle) {}
@@ -81,39 +89,45 @@ Player::Player(Rectangle rectangle) : GameObject(rectangle) {}
 void Player::update(Map* map) {	
 	updateMovement(map);
 
-	move(0, 7.0f, map);
+	if (!State.isAscending) {
+		move(0, MOVE_SPEED, map);
+	}
 
-	position.x += xSpeed;
-	position.y += ySpeed;
+	if (State.isCollidingBottom) {
+		currentJumpHeight = 0;
+	}
 
-	hitBox.x = position.x;
-	hitBox.y = position.y;
-
-	std::cout << "col top: " << State.isCollidingTop << std::endl;
-	std::cout << "col bot: " << State.isCollidingBottom << std::endl;
-	std::cout << "col left: " << State.isCollidingLeft << std::endl;
-	std::cout << "col right: " << State.isCollidingRight << std::endl;
+	if (State.isCollidingTop) {
+		currentJumpHeight = MAX_JUMP_HEIGHT;
+	}
 }
 
 void Player::updateMovement(Map* map) {
 	if (IsKeyDown(KEY_A) && !IsKeyDown(KEY_D)) {
 		currentAnimation = "player_walk_left";
-		move(-8.0f, 0, map);
+		move(-MOVE_SPEED, 0, map);
 	}
 	else if (IsKeyDown(KEY_D) && !IsKeyDown(KEY_A)) {
 		currentAnimation = "player_walk_right";
-		move(8.0f, 0, map);
+		move(MOVE_SPEED, 0, map);
 	}
 
-	if (IsKeyDown(KEY_SPACE)) {
+	if (IsKeyDown(KEY_SPACE) && currentJumpHeight < MAX_JUMP_HEIGHT) {
+		State.isAscending = true;
+		move(0, -MOVE_SPEED, map);
+
 		if (State.FacingDirection.right) {
 			currentAnimation = "player_jump_right";
 		}
 		else {
 			currentAnimation = "player_jump_left";
 		}
-		move(0, -14.0f, map);
 	}
+	else {
+		State.isAscending = false;
+		currentJumpHeight = MAX_JUMP_HEIGHT;
+	}
+
 
 	if (!IsKeyDown(KEY_SPACE) && !IsKeyDown(KEY_A) && !IsKeyDown(KEY_D)) {
 		if (State.FacingDirection.right) {
@@ -144,16 +158,8 @@ Rectangle Player::checkCollision(std::vector<ObjectGroupData>& objectGroupData, 
 	return Rectangle{ 0 };
 }
 
-void Player::updateCollisionDirections(int x, int y)
+void Player::updateCollisionDirections(float x, float y)
 {
-	State.isCollidingTop = false;
-	State.isCollidingBottom = false;
-	State.isCollidingLeft = false;
-	State.isCollidingRight = false;
-
-	/*std::cout << "x: " << x << std::endl;*/
-	std::cout << "y: " << y << std::endl;
-
 	if (x > 0) {
 		State.isCollidingRight = true;
 	}
