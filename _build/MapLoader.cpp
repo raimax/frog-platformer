@@ -37,6 +37,7 @@ std::unique_ptr<Map> MapLoader::parseMapFromJson(std::string pathToFile)
         if (layer["name"] == "Ground") layerId = GROUND;
         if (layer["name"] == "Collision") layerId = COLLISION;
         if (layer["name"] == "Foreground") layerId = FOREGROUND;
+        if (layer["name"] == "Objects") layerId = OBJECTS;
 
         if (layer["type"] == "tilelayer") {
             std::vector<int> data;
@@ -66,24 +67,31 @@ std::unique_ptr<Map> MapLoader::parseMapFromJson(std::string pathToFile)
 
                 map->addObjectData(ObjectGroupData(layerId, layer["name"], objects, layer["type"]));
             }
-            if (layer["name"] == "Portal") {
+            if (layer["name"] == "Objects") {
                 for (auto const& object : layer["objects"]) {
-                    if (object["name"] == "areaEnter") {
-                        map->setAreaEnter(Rectangle{ object["x"] * map->getScale(),
-                            object["y"] * map->getScale(),
-                            object["width"] * map->getScale(),
-                            object["height"] * map->getScale() });
-                    }
-                    else if (object["name"] == "areaExit") {
-                        map->setAreaExit(Rectangle{ object["x"] * map->getScale(),
-                            object["y"] * map->getScale(),
-                            object["width"] * map->getScale(),
-                            object["height"] * map->getScale() });
+                    if (object["type"] == "portal") {
+                        if (object["name"] == "areaEnter") {
+                            map->setAreaEnter(Rectangle{ object["x"] * map->getScale(),
+                                object["y"] * map->getScale(),
+                                object["width"] * map->getScale(),
+                                object["height"] * map->getScale() });
+                        }
+                        else if (object["name"] == "areaExit") {
+                            map->setAreaExit(Rectangle{ object["x"] * map->getScale(),
+                                object["y"] * map->getScale(),
+                                object["width"] * map->getScale(),
+                                object["height"] * map->getScale() });
 
-                        for (auto const& prop : object["properties"]) {
-                            if (prop["name"] == "nextArea") {
-                                map->setNextScene(prop["value"]);
+                            for (auto const& prop : object["properties"]) {
+                                if (prop["name"] == "nextArea") {
+                                    map->setNextScene(prop["value"]);
+                                }
                             }
+                        }
+                    }
+                    if (object["type"] == "item") {
+                        if (object["name"] == "doubleJump") {
+
                         }
                     }
                 }
@@ -96,7 +104,7 @@ std::unique_ptr<Map> MapLoader::parseMapFromJson(std::string pathToFile)
                 size_t lastindex = imgName.find_last_of(".");
                 std::string name = imgName.substr(0, lastindex);
 
-                map->setBackground(SpriteManager::background[name]);
+                map->setBackgroundImageName(name);
             }
         }
         

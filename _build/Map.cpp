@@ -9,6 +9,8 @@ void Map::drawGroundLayer()
 				{
 					for (int j = 0; j < width; j++)
 					{
+						//std::cout << layer.layerMatrix[15][] << std::endl;
+						frameRec = getTileCoords(layer.id, layer.layerMatrix[15][12]);
 						if (layer.layerMatrix[i][j] == 0) continue;
 
 						frameRec = getTileCoords(layer.id, layer.layerMatrix[i][j]);
@@ -120,23 +122,20 @@ void Map::addLayerData(const TileLayerData& data)
 
 void Map::buildImageArray() {
 	for (auto& tileset : tilesetData) {
-		if (tileset.name == "test_map_tileset") {
-			int rows = tileset.imageWidth / tileset.tileWidth;
-			int cols = tileset.imageHeight / tileset.tileHeight;
-			int counter = 1;
+		int rows = tileset.imageWidth / tileset.tileWidth;
+		int cols = tileset.imageHeight / tileset.tileHeight;
+		int counter = 1;
 
-			tileset.imageArray.resize(rows, std::vector<int>(cols));
+		tileset.imageArray.resize(rows, std::vector<int>(cols));
 
-			for (int i = 0; i < cols; i++)
+		for (int i = 0; i < cols; i++)
+		{
+			for (int j = 0; j < rows; j++)
 			{
-				for (int j = 0; j < rows; j++)
-				{
-					tileset.imageArray[j][i] = counter;
-					counter++;
-				}
+				tileset.imageArray[j][i] = counter;
+				counter++;
 			}
 		}
-		return;
 	}
 }
 
@@ -197,14 +196,12 @@ std::string Map::getNextScene() {
 	return nextScene;
 }
 
-void Map::setBackground(Texture2D& texture) {
-	background = texture;
-}
-
 void Map::setBackgroundImageName(std::string name) {
 	backgroundImageName = name;
 }
 
 void Map::drawBackgroundImage() {
-	DrawTextureEx(SpriteManager::background["main_background"], Vector2{0}, 0, scale, WHITE);
+	if (backgroundImageName != "") {
+		DrawTextureEx(SpriteManager::background[backgroundImageName], Vector2{ 0 }, 0, scale, WHITE);
+	}
 }

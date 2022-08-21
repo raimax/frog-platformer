@@ -281,7 +281,7 @@
         {
          "draworder":"topdown",
          "id":7,
-         "name":"Portal",
+         "name":"Objects",
          "objects":[
                 {
                  "height":16,
@@ -302,7 +302,7 @@
                         {
                          "name":"nextArea",
                          "type":"string",
-                         "value":"test_map3"
+                         "value":"world1_area1"
                         }],
                  "rotation":0,
                  "type":"portal",

@@ -3,6 +3,7 @@
 std::map<std::string, Texture2D> SpriteManager::player;
 std::map<std::string, Texture2D> SpriteManager::background;
 std::map<std::string, Texture2D> SpriteManager::map;
+std::map<std::string, Texture2D> SpriteManager::item;
 
 void SpriteManager::loadTextures()
 {
@@ -23,6 +24,11 @@ void SpriteManager::loadTextures()
 
 	map = {
 		{"test_map_tileset", LoadTexture("assets/scenes/test_map_tileset.png")},
+		{"default_tileset", LoadTexture("assets/scenes/default_tileset.png")},
+	};
+
+	item = {
+		{"double_jump", LoadTexture("assets/items/double_jump.png")},
 	};
 }
 
@@ -51,5 +57,5 @@ void SpriteManager::unloadTextures(std::vector<std::reference_wrapper<std::map<s
 
 SpriteManager::~SpriteManager()
 {
-	unloadTextures({ {player}, {background}, {map} });
+	unloadTextures({ {player}, {background}, {map}, {item} });
 }

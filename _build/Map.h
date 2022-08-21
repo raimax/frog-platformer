@@ -3,6 +3,7 @@
 #include <vector>
 #include <raylib.h>
 #include "SpriteManager.h"
+//#include "Item.h"
 
 typedef struct TilesetData
 {
@@ -87,7 +88,8 @@ typedef struct Portal {
 enum Layer {
 	GROUND = 1,
 	COLLISION = 2,
-	FOREGROUND = 3
+	FOREGROUND = 3,
+	OBJECTS = 4
 };
 
 #ifndef BG_SCALE
@@ -101,12 +103,12 @@ private:
 	int height;
 	const float scale = 3.0f;
 	Rectangle frameRec;
-	Texture2D background;
-	std::string backgroundImageName;
+	std::string backgroundImageName = "";
 	std::vector<std::vector<int>> dataToLayer(const std::vector<int>& data);
 	std::vector<TileLayerData> layerData;
 	std::vector<TilesetData> tilesetData;
 	std::vector<MapLayer> mapLayers;
+	//std::vector<std::unique_ptr<Item>> mapItems;
 	Rectangle getTileCoords(int layerId, int tileId);
 	Rectangle areaEnter;
 	Rectangle areaExit;
@@ -120,6 +122,7 @@ public:
 	void drawGroundLayer();
 	void drawForegroundLayer();
 	void drawBackgroundImage();
+	void drawItems();
 	void setDimensions(int width, int height);
 	int* getWidth();
 	int* getHeight();
@@ -132,7 +135,6 @@ public:
 	Portal getAreaPortals();
 	void setNextScene(std::string nextScene);
 	std::string getNextScene();
-	void setBackground(Texture2D& texture);
 	void setBackgroundImageName(std::string name);
 };
 

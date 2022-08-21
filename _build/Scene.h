@@ -1,9 +1,10 @@
 #pragma once
 #include "Player.h"
 #include "Transition.h"
-#include "TransitionManager.h"
 #include "FadeOut.h"
 #include "FadeIn.h"
+#include "Item.h"
+#include "DoubleJump.h"
 
 class Scene
 {

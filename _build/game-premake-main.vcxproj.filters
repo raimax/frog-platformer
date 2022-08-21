@@ -10,6 +10,9 @@
     <Filter Include="Source Files\Scenes">
       <UniqueIdentifier>{c7d9951a-ff3e-4784-b368-14c76d79d68e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\items">
+      <UniqueIdentifier>{5bad60e1-aca8-4cd9-9db7-edccb6ccb9ec}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\game\src\raylib_game.cpp">
@@ -72,6 +75,12 @@
     <ClCompile Include="Helper.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <Filter>Source Files\items</Filter>
+    </ClCompile>
+    <ClCompile Include="DoubleJump.cpp">
+      <Filter>Source Files\items</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -131,7 +140,12 @@
     <ClInclude Include="Helper.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="findme.h" />
+    <ClInclude Include="Item.h">
+      <Filter>Source Files\items</Filter>
+    </ClInclude>
+    <ClInclude Include="DoubleJump.h">
+      <Filter>Source Files\items</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="game-premake-main.rc" />

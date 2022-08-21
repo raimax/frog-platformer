@@ -1,4 +1,12 @@
 { "compressionlevel":-1,
+ "editorsettings":
+    {
+     "export":
+        {
+         "format":"json",
+         "target":"world1_area1.json"
+        }
+    },
  "height":23,
  "infinite":false,
  "layers":[
@@ -17,11 +25,33 @@
         {
          "draworder":"topdown",
          "id":3,
-         "name":"Portal",
+         "name":"Objects",
          "objects":[
                 {
-                 "id":9,
-                 "template":"..\/..\/..\/..\/..\/Desktop\/areaExit.tx",
+                 "height":16,
+                 "id":12,
+                 "name":"areaEnter",
+                 "rotation":0,
+                 "type":"portal",
+                 "visible":true,
+                 "width":16,
+                 "x":16,
+                 "y":272
+                }, 
+                {
+                 "height":16,
+                 "id":13,
+                 "name":"areaExit",
+                 "properties":[
+                        {
+                         "name":"nextArea",
+                         "type":"string",
+                         "value":"test_map2"
+                        }],
+                 "rotation":0,
+                 "type":"portal",
+                 "visible":true,
+                 "width":16,
                  "x":624,
                  "y":288
                 }],
@@ -36,17 +66,6 @@
          "id":2,
          "name":"Collision",
          "objects":[
-                {
-                 "height":16,
-                 "id":1,
-                 "name":"",
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":16,
-                 "x":0,
-                 "y":0
-                }, 
                 {
                  "height":64,
                  "id":3,
@@ -131,7 +150,7 @@
          "y":0
         }],
  "nextlayerid":4,
- "nextobjectid":11,
+ "nextobjectid":14,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.7.2",

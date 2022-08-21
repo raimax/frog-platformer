@@ -17,11 +17,11 @@ enum Direction
 class Player : public GameObject
 {
 private:
-	const float MAX_JUMP_HEIGHT = 15.0f;
+	const float MAX_JUMP_HEIGHT = 8.0f;
 	const float MOVE_SPEED = 8.0f;
 	float currentJumpHeight = 0;
-	bool doubleJump = true;
 	int jumps = 2;
+	float ySpeed = 0;
 	struct ObjectState {
 		bool isAscending = false;
 		bool isDescending = true;
@@ -48,5 +48,6 @@ public:
 	Player(Rectangle rectangle);
 	void update(Map* map);
 	ObjectState getState();
+	void addJump();
 };
 
