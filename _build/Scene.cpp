@@ -14,6 +14,7 @@ void Scene::drawScene()
 		map->drawGroundLayer();
 		player->draw();
 		map->drawForegroundLayer();
+		map->drawObjects();
 	}
 }
 
@@ -25,6 +26,8 @@ void Scene::updateScene()
 		if (CheckCollisionRecs(*player->getHitBox(), map->getAreaPortals().areaExit)) {
 			isChanging = true;
 		}
+
+		map->updateObjects(player.get());
 	}
 }
 

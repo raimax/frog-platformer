@@ -1,4 +1,5 @@
 #include "Item.h"
+#include "DoubleJump.h"
 
 Item::Item(Rectangle hitBox) : GameObject(hitBox) {
 	this->hitBox = hitBox;
@@ -21,15 +22,16 @@ void Item::draw()
 void Item::update(Player* player)
 {
 	if (CheckCollisionRecs(*player->getHitBox(), hitBox) && !isClaimed) {
-		std::cout << "pickup" << std::endl;
 		onPickup(player);
 	}
 
-	framesCounter++;
+	if (isClaimed) {
+		framesCounter++;
 
-	if (framesCounter >= (60 * 3))
-	{
-		framesCounter = 0;
-		isClaimed = false;
+		if (framesCounter >= (60 * 3))
+		{
+			framesCounter = 0;
+			isClaimed = false;
+		}
 	}
 }

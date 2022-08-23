@@ -3,7 +3,6 @@
 #include <vector>
 #include <raylib.h>
 #include "SpriteManager.h"
-//#include "Item.h"
 
 typedef struct TilesetData
 {
@@ -96,6 +95,9 @@ enum Layer {
 #define BG_SCALE 8.0f
 #endif // !BG_SCALE
 
+class Player;
+class Item;
+
 class Map
 {
 private:
@@ -108,7 +110,7 @@ private:
 	std::vector<TileLayerData> layerData;
 	std::vector<TilesetData> tilesetData;
 	std::vector<MapLayer> mapLayers;
-	//std::vector<std::unique_ptr<Item>> mapItems;
+	std::vector<std::shared_ptr<Item>> mapItems;
 	Rectangle getTileCoords(int layerId, int tileId);
 	Rectangle areaEnter;
 	Rectangle areaExit;
@@ -118,11 +120,11 @@ public:
 	~Map();
 	void buildTileLayers();
 	void buildImageArray();
-	//void draw();
 	void drawGroundLayer();
 	void drawForegroundLayer();
 	void drawBackgroundImage();
-	void drawItems();
+	void drawObjects();
+	void updateObjects(Player* player);
 	void setDimensions(int width, int height);
 	int* getWidth();
 	int* getHeight();
@@ -136,5 +138,6 @@ public:
 	void setNextScene(std::string nextScene);
 	std::string getNextScene();
 	void setBackgroundImageName(std::string name);
+	void addMapItem(std::shared_ptr<Item> item);
 };
 

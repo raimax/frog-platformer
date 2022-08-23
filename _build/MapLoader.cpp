@@ -1,4 +1,5 @@
 #include "MapLoader.h"
+#include "DoubleJump.h"
 
 nlohmann::json MapLoader::parseJson(std::string pathToFile)
 {
@@ -71,13 +72,15 @@ std::unique_ptr<Map> MapLoader::parseMapFromJson(std::string pathToFile)
                 for (auto const& object : layer["objects"]) {
                     if (object["type"] == "portal") {
                         if (object["name"] == "areaEnter") {
-                            map->setAreaEnter(Rectangle{ object["x"] * map->getScale(),
+                            map->setAreaEnter(Rectangle{ 
+                                object["x"] * map->getScale(),
                                 object["y"] * map->getScale(),
                                 object["width"] * map->getScale(),
                                 object["height"] * map->getScale() });
                         }
                         else if (object["name"] == "areaExit") {
-                            map->setAreaExit(Rectangle{ object["x"] * map->getScale(),
+                            map->setAreaExit(Rectangle{ 
+                                object["x"] * map->getScale(),
                                 object["y"] * map->getScale(),
                                 object["width"] * map->getScale(),
                                 object["height"] * map->getScale() });
@@ -91,7 +94,13 @@ std::unique_ptr<Map> MapLoader::parseMapFromJson(std::string pathToFile)
                     }
                     if (object["type"] == "item") {
                         if (object["name"] == "doubleJump") {
+                            std::shared_ptr<DoubleJump> dd = std::make_shared<DoubleJump>(Rectangle{
+                                object["x"] * map->getScale(),
+                                object["y"] * map->getScale(),
+                                object["width"] * map->getScale(),
+                                object["height"] * map->getScale() });
 
+                            map->addMapItem(dd);
                         }
                     }
                 }
@@ -99,7 +108,7 @@ std::unique_ptr<Map> MapLoader::parseMapFromJson(std::string pathToFile)
         }
         else if (layer["type"] == "imagelayer") {
             if (layer["name"] == "BackgroundImage") {
-                //remove extension
+                //removes file extension from img name
                 std::string imgName = layer["image"];
                 size_t lastindex = imgName.find_last_of(".");
                 std::string name = imgName.substr(0, lastindex);

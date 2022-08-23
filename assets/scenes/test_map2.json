@@ -310,6 +310,28 @@
                  "width":16,
                  "x":512,
                  "y":288
+                }, 
+                {
+                 "height":16,
+                 "id":28,
+                 "name":"doubleJump",
+                 "rotation":0,
+                 "type":"item",
+                 "visible":true,
+                 "width":16,
+                 "x":144,
+                 "y":160
+                }, 
+                {
+                 "height":16,
+                 "id":29,
+                 "name":"doubleJump",
+                 "rotation":0,
+                 "type":"item",
+                 "visible":true,
+                 "width":16,
+                 "x":192,
+                 "y":272
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -318,7 +340,7 @@
          "y":0
         }],
  "nextlayerid":9,
- "nextobjectid":28,
+ "nextobjectid":30,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.7.2",

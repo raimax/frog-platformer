@@ -1,4 +1,6 @@
 #include "Map.h"
+#include "Item.h"
+#include "Player.h"
 
 void Map::drawGroundLayer() 
 {
@@ -81,10 +83,7 @@ void Map::buildTileLayers()
 	}
 }
 
-Map::~Map()
-{
-
-}
+Map::~Map() = default;
 
 std::vector<std::vector<int>> Map::dataToLayer(const std::vector<int>& data)
 {
@@ -204,4 +203,20 @@ void Map::drawBackgroundImage() {
 	if (backgroundImageName != "") {
 		DrawTextureEx(SpriteManager::background[backgroundImageName], Vector2{ 0 }, 0, scale, WHITE);
 	}
+}
+
+void Map::drawObjects() {
+	for (auto const& item : mapItems) {
+		item->draw();
+	}
+}
+
+void Map::updateObjects(Player* player) {
+	for (auto const& item : mapItems) {
+		item->update(player);
+	}
+}
+
+void Map::addMapItem(std::shared_ptr<Item> item) {
+	mapItems.push_back(std::move(item));
 }
