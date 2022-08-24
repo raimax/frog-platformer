@@ -73,17 +73,19 @@ void Player::checkY(float y, Map* map)
 }
 
 void Player::draw() {
-	AnimationManager::playAnimation(currentAnimation, this);
-
-	DrawText("TOP", 200, 200, 28, State.isCollidingTop ? GREEN : BLACK);
-	DrawText("BOTTOM", 200, 230, 28, State.isCollidingBottom ? GREEN : BLACK);
-	DrawText("LEFT ", 200, 260, 28, State.isCollidingLeft ? GREEN : BLACK);
-	DrawText("RIGHT", 200, 290, 28, State.isCollidingRight ? GREEN : BLACK);
+	if (State.isAlive) {
+		AnimationManager::playAnimation(currentAnimation, this);
+	}
 }
 
-Player::Player(Rectangle rectangle) : GameObject(rectangle) {}
+Player::Player(Rectangle rectangle) : GameObject(rectangle) 
+{
+	this->hitBox = Rectangle{ rectangle.x + 2.0f, rectangle.y + 2.0f, rectangle.width - 4.0f, rectangle.height - 4.0f };
+}
 
 void Player::update(Map* map) {	
+	if (!State.isAlive) return;
+
 	updateMovement(map);
 
 	if (ySpeed > 6.0f) {
@@ -128,10 +130,6 @@ void Player::update(Map* map) {
 	if (State.isCollidingTop) {
 		currentJumpHeight = MAX_JUMP_HEIGHT;
 	}
-
-	//std::cout << "ySpeed: " << ySpeed << std::endl;
-	//std::cout << "jumps: " << jumps << std::endl;
-	//std::cout << "currentJumpHeight: " << currentJumpHeight << std::endl;
 }
 
 void Player::updateMovement(Map* map) {
@@ -188,14 +186,22 @@ void Player::updateMovement(Map* map) {
 	}
 }
 
-Player::ObjectState Player::getState()
+Player::ObjectState* Player::getState()
 {
-	return State;
+	return &State;
 }
 
 void Player::addJump()
 {
 	jumps++;
+}
+
+void Player::moveToPosition(Vector2 position)
+{
+	this->position = position;
+	this->hitBox.x = position.x;
+	this->hitBox.y = position.y;
+	this->ySpeed = 0;
 }
 
 Rectangle Player::checkCollision(std::vector<ObjectGroupData>& objectGroupData, Rectangle hitBox) {

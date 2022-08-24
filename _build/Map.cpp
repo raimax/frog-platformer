@@ -205,13 +205,13 @@ void Map::drawBackgroundImage() {
 	}
 }
 
-void Map::drawObjects() {
+void Map::drawItems() {
 	for (auto const& item : mapItems) {
 		item->draw();
 	}
 }
 
-void Map::updateObjects(Player* player) {
+void Map::updateItems(Player* player) {
 	for (auto const& item : mapItems) {
 		item->update(player);
 	}
@@ -219,4 +219,25 @@ void Map::updateObjects(Player* player) {
 
 void Map::addMapItem(std::shared_ptr<Item> item) {
 	mapItems.push_back(std::move(item));
+}
+
+void Map::checkForDeath(Player* player)
+{
+	if (!player->getState()->isAlive) return;
+
+	for (auto const& object : deadlyObjects) {
+		if (CheckCollisionRecs(object.rectangle, *player->getHitBox())) {
+			player->getState()->isAlive = false;
+		}
+	}
+}
+
+std::vector<MapObject>* Map::getDeadlyObjects()
+{
+	return &deadlyObjects;
+}
+
+void Map::addDeadlyObject(MapObject object)
+{
+	deadlyObjects.push_back(object);
 }

@@ -92,7 +92,7 @@ std::unique_ptr<Map> MapLoader::parseMapFromJson(std::string pathToFile)
                             }
                         }
                     }
-                    if (object["type"] == "item") {
+                    else if (object["type"] == "item") {
                         if (object["name"] == "doubleJump") {
                             std::shared_ptr<DoubleJump> dd = std::make_shared<DoubleJump>(Rectangle{
                                 object["x"] * map->getScale(),
@@ -101,6 +101,58 @@ std::unique_ptr<Map> MapLoader::parseMapFromJson(std::string pathToFile)
                                 object["height"] * map->getScale() });
 
                             map->addMapItem(dd);
+                        }
+                    }
+                    else if (object["type"] == "deadly") {
+                        if (object["name"] == "halfSpikes") {
+                            for (auto const& prop : object["properties"]) {
+                                if (prop["name"] == "position" && prop["value"] == "bottom") {
+                                    float newY = object["y"] + static_cast<float>(object["height"]);
+                                    float height = object["height"];
+                                    float newHeight = height *= -1;
+                                    map->addDeadlyObject(MapObject(
+                                        object["id"],
+                                        Rectangle{
+                                            object["x"] * map->getScale(),
+                                            newY * map->getScale(),
+                                            object["width"] * map->getScale(),
+                                            newHeight * map->getScale() },
+                                            object["type"]));
+                                }
+                                else if (prop["name"] == "position" && prop["value"] == "right") {
+                                    float newX = object["x"] + static_cast<float>(object["width"]);
+                                    float width = object["width"];
+                                    float newWidth = width *= -1;
+                                    map->addDeadlyObject(MapObject(
+                                        object["id"],
+                                        Rectangle{
+                                            newX * map->getScale(),
+                                            object["y"] * map->getScale(),
+                                            newWidth * map->getScale(),
+                                            object["height"] * map->getScale() },
+                                            object["type"]));
+                                }
+                                else {
+                                    map->addDeadlyObject(MapObject(
+                                        object["id"],
+                                        Rectangle{
+                                            object["x"] * map->getScale(),
+                                            object["y"] * map->getScale(),
+                                            object["width"] * map->getScale(),
+                                            object["height"] * map->getScale() },
+                                            object["type"]));
+                                }
+                            }
+                        }
+                        else {
+                            map->addDeadlyObject(MapObject(
+                                object["id"],
+                                Rectangle{
+                                    object["x"] * map->getScale(),
+                                    object["y"] * map->getScale(),
+                                    object["width"] * map->getScale(),
+                                    object["height"] * map->getScale() },
+                                    object["type"]));
                         }
                     }
                 }

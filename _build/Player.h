@@ -29,6 +29,7 @@ private:
 		bool isCollidingBottom = false;
 		bool isCollidingLeft = false;
 		bool isCollidingRight = false;
+		bool isAlive = true;
 		struct FacingDirection {
 			bool right = true;
 			bool left = false;
@@ -47,7 +48,8 @@ public:
 	void draw() override;
 	Player(Rectangle rectangle);
 	void update(Map* map);
-	ObjectState getState();
+	ObjectState* getState();
 	void addJump();
+	void moveToPosition(Vector2 position);
 };
 

@@ -1,6 +1,7 @@
 #include "Scene.h"
 #include "MapLoader.h"
 #include "SceneManager.h"
+#include "Game.h"
 
 void Scene::setMap(std::unique_ptr<Map> map)
 {
@@ -14,7 +15,11 @@ void Scene::drawScene()
 		map->drawGroundLayer();
 		player->draw();
 		map->drawForegroundLayer();
-		map->drawObjects();
+		map->drawItems();
+
+		if (!player->getState()->isAlive) {
+			DrawTextPro(Game::font, "You died. Press 'R' to respawn.", Vector2{ 500, 500 }, Vector2{0}, 0, 48.0f, 1.0f, RED);
+		}
 	}
 }
 
@@ -27,7 +32,13 @@ void Scene::updateScene()
 			isChanging = true;
 		}
 
-		map->updateObjects(player.get());
+		map->updateItems(player.get());
+		map->checkForDeath(player.get());
+
+		if (IsKeyPressed(KEY_R)) {
+			player->moveToPosition(Vector2{ map->getAreaPortals().areaEnter.x, map->getAreaPortals().areaEnter.y });
+			player->getState()->isAlive = true;
+		}
 	}
 }
 

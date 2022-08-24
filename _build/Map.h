@@ -111,6 +111,7 @@ private:
 	std::vector<TilesetData> tilesetData;
 	std::vector<MapLayer> mapLayers;
 	std::vector<std::shared_ptr<Item>> mapItems;
+	std::vector<MapObject> deadlyObjects;
 	Rectangle getTileCoords(int layerId, int tileId);
 	Rectangle areaEnter;
 	Rectangle areaExit;
@@ -123,8 +124,8 @@ public:
 	void drawGroundLayer();
 	void drawForegroundLayer();
 	void drawBackgroundImage();
-	void drawObjects();
-	void updateObjects(Player* player);
+	void drawItems();
+	void updateItems(Player* player);
 	void setDimensions(int width, int height);
 	int* getWidth();
 	int* getHeight();
@@ -139,5 +140,8 @@ public:
 	std::string getNextScene();
 	void setBackgroundImageName(std::string name);
 	void addMapItem(std::shared_ptr<Item> item);
+	void checkForDeath(Player* player);
+	std::vector<MapObject>* getDeadlyObjects();
+	void addDeadlyObject(MapObject object);
 };
 
