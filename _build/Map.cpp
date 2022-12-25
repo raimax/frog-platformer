@@ -217,6 +217,12 @@ void Map::updateItems(Player* player) {
 	}
 }
 
+void Map::resetItemTimers() {
+	for (auto const& item : mapItems) {
+		item->reset();
+	}
+}
+
 void Map::addMapItem(std::shared_ptr<Item> item) {
 	mapItems.push_back(std::move(item));
 }

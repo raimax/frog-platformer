@@ -143,5 +143,6 @@ public:
 	void checkForDeath(Player* player);
 	std::vector<MapObject>* getDeadlyObjects();
 	void addDeadlyObject(MapObject object);
+	void resetItemTimers();
 };
 

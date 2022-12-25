@@ -13,5 +13,6 @@ public:
 	Item(Rectangle hitBox);
 	void draw() override;
 	void update(Player* player);
+	void reset();
 };
 

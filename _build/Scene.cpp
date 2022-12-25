@@ -38,6 +38,7 @@ void Scene::updateScene()
 		if (IsKeyPressed(KEY_R)) {
 			player->moveToPosition(Vector2{ map->getAreaPortals().areaEnter.x, map->getAreaPortals().areaEnter.y });
 			player->getState()->isAlive = true;
+			map->resetItemTimers();
 		}
 	}
 }

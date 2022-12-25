@@ -1,7 +1,7 @@
 #pragma once
 #include "Map.h"
 #include <fstream>
-#include <nlohmann/json.hpp>
+#include <../include/nlohmann/json.hpp>
 #include <iostream>
 
 class MapLoader

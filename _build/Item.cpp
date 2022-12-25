@@ -35,3 +35,9 @@ void Item::update(Player* player)
 		}
 	}
 }
+
+void Item::reset()
+{
+	isClaimed = false;
+	framesCounter = 0;
+}
