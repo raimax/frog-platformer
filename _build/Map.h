@@ -145,4 +145,3 @@ public:
 	void addDeadlyObject(MapObject object);
 	void resetItemTimers();
 };
-

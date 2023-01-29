@@ -23,8 +23,14 @@ void SpriteManager::loadTextures()
 	};
 
 	map = {
-		{"test_map_tileset", LoadTexture("assets/scenes/test_map_tileset.png")},
-		{"default_tileset", LoadTexture("assets/scenes/default_tileset.png")},
+		{"spring_", LoadTexture("assets/tilesets/fourSeasons/midground_/spring_.png")},
+		{"summer_", LoadTexture("assets/tilesets/fourSeasons/midground_/summer_.png")},
+		{"autumn_", LoadTexture("assets/tilesets/fourSeasons/midground_/autumn_.png")},
+		{"winter_", LoadTexture("assets/tilesets/fourSeasons/midground_/winter_.png")},
+		{"desertDungeon_", LoadTexture("assets/tilesets/fourSeasons/midground_/desertDungeon_.png")},
+		{"dungeon_", LoadTexture("assets/tilesets/fourSeasons/midground_/dungeon_.png")},
+		{"staticObjects_", LoadTexture("assets/tilesets/fourSeasons/objects_/staticObjects_.png")},
+		{"sky_", LoadTexture("assets/tilesets/fourSeasons/background_/sky_.png")},
 	};
 
 	item = {
