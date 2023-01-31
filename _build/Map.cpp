@@ -72,6 +72,40 @@ void Map::drawForegroundLayer()
 	}
 }
 
+void Map::drawBackgroundLayer()
+{
+	for (auto const& tileset : tilesetData) {
+		for (auto const& layer : mapLayers) {
+			if (layer.id == BACKGROUND) {
+				for (int i = 0; i < height; i++)
+				{
+					for (int j = 0; j < width; j++)
+					{
+						if (layer.layerMatrix[i][j] == 0) continue;
+
+						frameRec = getTileCoords(layer.id, layer.layerMatrix[i][j]);
+
+						DrawTexturePro(
+							SpriteManager::map[tileset.name],
+							frameRec,
+							Rectangle
+							{
+								(float)(j * tileset.tileWidth * scale),
+								(float)(i * tileset.tileHeight * scale),
+								(float)(tileset.tileWidth * scale),
+								(float)(tileset.tileHeight * scale)
+							},
+							Vector2{ 0, 0 },
+							0,
+							WHITE
+						);
+					}
+				}
+			}
+		}
+	}
+}
+
 void Map::buildTileLayers()
 {
 	for (auto const& tileset : tilesetData)
@@ -236,6 +270,23 @@ void Map::checkForDeath(Player* player)
 			player->getState()->isAlive = false;
 		}
 	}
+
+	if (isPlayerOutOfBounds(player)) {
+		player->getState()->isAlive = false;
+	}
+}
+
+bool Map::isPlayerOutOfBounds(Player* player)
+{
+	if (player->getHitBox()->y > getMapSize().height) {
+		return true;
+	}
+	return false;
+}
+
+Box Map::getMapSize()
+{
+	return Box(height * 16 * scale, width * 16 * scale);
 }
 
 std::vector<MapObject>* Map::getDeadlyObjects()

@@ -12,6 +12,7 @@ void Scene::drawScene()
 {
 	if (player && map) {
 		map->drawBackgroundImage();
+		map->drawBackgroundLayer();
 		map->drawGroundLayer();
 		player->draw();
 		map->drawForegroundLayer();

@@ -19,18 +19,13 @@ void SpriteManager::loadTextures()
 	};
 
 	background = {
-		{"main_background", LoadTexture("assets/scenes/main_background.png")},
+		{"sunset_bg", LoadTexture("assets/tilesets/backgrounds/sunset_bg.png")},
+		{"mountain_ruins_bg", LoadTexture("assets/tilesets/backgrounds/mountain_ruins_bg.png")},
 	};
 
 	map = {
-		{"spring_", LoadTexture("assets/tilesets/fourSeasons/midground_/spring_.png")},
-		{"summer_", LoadTexture("assets/tilesets/fourSeasons/midground_/summer_.png")},
-		{"autumn_", LoadTexture("assets/tilesets/fourSeasons/midground_/autumn_.png")},
-		{"winter_", LoadTexture("assets/tilesets/fourSeasons/midground_/winter_.png")},
-		{"desertDungeon_", LoadTexture("assets/tilesets/fourSeasons/midground_/desertDungeon_.png")},
-		{"dungeon_", LoadTexture("assets/tilesets/fourSeasons/midground_/dungeon_.png")},
-		{"staticObjects_", LoadTexture("assets/tilesets/fourSeasons/objects_/staticObjects_.png")},
-		{"sky_", LoadTexture("assets/tilesets/fourSeasons/background_/sky_.png")},
+		{"summer", LoadTexture("assets/tilesets/fourSeasons/summer.png")},
+		{"winter", LoadTexture("assets/tilesets/fourSeasons/winter.png")},
 	};
 
 	item = {

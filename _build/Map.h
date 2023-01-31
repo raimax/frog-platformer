@@ -84,11 +84,21 @@ typedef struct Portal {
 	Rectangle areaExit;
 } Portal;
 
+typedef struct Box {
+	Box(int width, int height) {
+		this->width = width;
+		this->height = height;
+	}
+	int width;
+	int height;
+} Box;
+
 enum Layer {
 	GROUND = 1,
 	COLLISION = 2,
 	FOREGROUND = 3,
-	OBJECTS = 4
+	OBJECTS = 4,
+	BACKGROUND = 5
 };
 
 #ifndef BG_SCALE
@@ -124,6 +134,7 @@ public:
 	void drawGroundLayer();
 	void drawForegroundLayer();
 	void drawBackgroundImage();
+	void drawBackgroundLayer();
 	void drawItems();
 	void updateItems(Player* player);
 	void setDimensions(int width, int height);
@@ -144,4 +155,6 @@ public:
 	std::vector<MapObject>* getDeadlyObjects();
 	void addDeadlyObject(MapObject object);
 	void resetItemTimers();
+	bool isPlayerOutOfBounds(Player* player);
+	Box getMapSize();
 };

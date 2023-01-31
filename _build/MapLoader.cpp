@@ -39,6 +39,7 @@ std::unique_ptr<Map> MapLoader::parseMapFromJson(std::string pathToFile)
         if (layer["name"] == "Collision") layerId = COLLISION;
         if (layer["name"] == "Foreground") layerId = FOREGROUND;
         if (layer["name"] == "Objects") layerId = OBJECTS;
+        if (layer["name"] == "Background") layerId = BACKGROUND;
 
         if (layer["type"] == "tilelayer") {
             std::vector<int> data;
@@ -160,12 +161,15 @@ std::unique_ptr<Map> MapLoader::parseMapFromJson(std::string pathToFile)
         }
         else if (layer["type"] == "imagelayer") {
             if (layer["name"] == "BackgroundImage") {
-                //removes file extension from img name
-                std::string imgName = layer["image"];
-                size_t lastindex = imgName.find_last_of(".");
-                std::string name = imgName.substr(0, lastindex);
+                // removes file path
+                std::string imgPath = layer["image"];
+                size_t lastSlashindex = imgPath.find_last_of("/");
+                std::string imgName = imgPath.substr(lastSlashindex + 1, imgPath.length());
+                // removes file extension
+                size_t lastDotindex = imgName.find_last_of(".");
+                std::string finalName = imgName.substr(0, lastDotindex);
 
-                map->setBackgroundImageName(name);
+                map->setBackgroundImageName(finalName);
             }
         }
         
