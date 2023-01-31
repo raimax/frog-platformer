@@ -37,7 +37,7 @@ void MenuScene::updateScene()
 		switch (selectedItem)
 		{
 			case PLAY:
-				triggerScene("test_map2");
+				triggerScene("map1");
 				break;
 			case STATS:
 				break;
