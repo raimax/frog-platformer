@@ -15,6 +15,7 @@ public:
 	static std::map<std::string, Texture2D> background;
 	static std::map<std::string, Texture2D> map;
 	static std::map<std::string, Texture2D> item;
+	static std::map<std::string, Texture2D> misc;
 	~SpriteManager();
 };
 

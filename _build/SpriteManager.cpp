@@ -4,6 +4,7 @@ std::map<std::string, Texture2D> SpriteManager::player;
 std::map<std::string, Texture2D> SpriteManager::background;
 std::map<std::string, Texture2D> SpriteManager::map;
 std::map<std::string, Texture2D> SpriteManager::item;
+std::map<std::string, Texture2D> SpriteManager::misc;
 
 void SpriteManager::loadTextures()
 {
@@ -30,6 +31,10 @@ void SpriteManager::loadTextures()
 
 	item = {
 		{"double_jump", LoadTexture("assets/items/double_jump.png")},
+	};
+
+	misc = {
+		{"title_screen_logo", LoadTexture("assets/title_screen_logo_750.png")},
 	};
 }
 
@@ -58,5 +63,5 @@ void SpriteManager::unloadTextures(std::vector<std::reference_wrapper<std::map<s
 
 SpriteManager::~SpriteManager()
 {
-	unloadTextures({ {player}, {background}, {map}, {item} });
+	unloadTextures({ {player}, {background}, {map}, {item}, {misc} });
 }

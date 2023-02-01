@@ -14,6 +14,19 @@ void MenuScene::drawScene()
 		}
 		DrawTextEx(Game::font, menuItems[i].c_str(), Vector2{ 200.0f, 200.0f + (i * 60) }, 48, 1.0f, RAYWHITE);
 	}
+
+	auto rect = Rectangle{ GetScreenWidth() * 1.5f / 2 - 750 /2, GetScreenHeight() * 1.5f / 2 - 750 / 2, 750, 750};
+
+	DrawTexturePro(
+		SpriteManager::misc["title_screen_logo"],
+		Rectangle{0, 0, 750, 750},
+		rect,
+		Vector2{ 0, 0 },
+		0,
+		WHITE
+	);
+
+	DrawRectangleLinesEx(rect, 10.0f, GREEN);
 }
 
 void MenuScene::updateScene()
@@ -39,11 +52,11 @@ void MenuScene::updateScene()
 			case PLAY:
 				triggerScene("map1");
 				break;
-			case STATS:
-				break;
-			case SETTINGS:
-				triggerScene("settings_scene");
-				break;
+			//case STATS:
+			//	break;
+			//case SETTINGS:
+			//	triggerScene("settings_scene");
+			//	break;
 			case QUIT:
 				Game::exitWindow = true;
 				break;

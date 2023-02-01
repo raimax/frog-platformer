@@ -3,15 +3,15 @@
 
 enum MenuItem {
 	PLAY,
-	STATS,
-	SETTINGS,
+	//STATS,
+	//SETTINGS,
 	QUIT
 };
 
 class MenuScene : public Scene
 {
 private:
-	std::vector<std::string> menuItems = { "Play", "Stats", "Settings", "Quit" };
+	std::vector<std::string> menuItems = { "Play", /*"Stats", "Settings", */"Quit" };
 	int selectedItem = 0;
 public:
 	void drawScene() override;
